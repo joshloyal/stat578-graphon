@@ -16,7 +16,13 @@ Mauricio Campos
 
 % Introduction
 \section{Introduction} \label{sec:intro}
-What is a graphon? \citep{gao2015optgraphon}
+
+Many scientific fields involve the analysis of network data. Applications include social networks, networks in statistical mechanics, biological networks, and information networks \citep{goldenberg2010survey}. As a result the statistics and machine learning communities have developed a plethora of methods for understanding networks in recent years. A large subset of these methods involve the nonparametric estimation of a special function known as a graphon \citep{borgs2008graphon, chatterjee2015univsvd, chan2014histo}. Just as in nonparametric function estimation with i.i.d data and a fixed design, it is important to known the optimal rate of convergence of such nonparametric graphon estimators. Such a rate allows one to determine whether certain proposed estimating procedures can be improved upon. In the remainder of this paper we will review the article by Gao and Zhu \citep{gao2015optgraphon}, which derives this minimax optimal rate for nonparameteric graphon estimation. In fact, there are two rates of convergence that we will cover. Each rate corresponds to certain assumptions made about the underlying graph generating process. The first rate pertains to estimation under the stochastic block model. The second rate only assumes that the graphon function belongs to an appropriate smoothness class.
+
+% Notation and Assumptions
+\section{Notation and Assumptions} \label{sec:not}
+
+We will begin by outlining the details of the estimation problem. We consider an undirected graph with $n$ nodes.
 
 \bibliographystyle{asa}
 \bibliography{reference}
