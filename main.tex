@@ -22,7 +22,12 @@ Many scientific fields involve the analysis of network data. Applications includ
 % Notation and Assumptions
 \section{Notation and Assumptions} \label{sec:not}
 
-We will begin by outlining the details of the estimation problem. We consider an undirected graph with $n$ nodes.
+We will begin by outlining the details of the estimation problem. We consider an undirected graph with $n$ nodes and no self-loops. The edges of the graph are encoded in a binary matrix $\set{A_{ij}} \in \set{0, 1}^{n \times n}$ known as an adjacency matrix. Note that the $\Adj$ entry of the adjacency matrix is 1 if node $i$ and $j$ are connected in the underlying graph and 0 otherwise. Since the graph is undirected, the adjacency matrix is symmetric, i.e. $A_{ij} = A_{ji}$. The absence of self-loops implies $A_{ii} = 0$. The underlying probabilistic model is
+
+\begin{align}
+A_{ij} &= A_{ji} \sim \Bern(\theta_{ij}) \\
+\theta_{ij} &= f(\xi_{i}, \xi_{j}), \quad i \neq j \in \brackets{n}.
+\end{align}
 
 \bibliographystyle{asa}
 \bibliography{reference}
