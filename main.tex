@@ -17,17 +17,20 @@ Mauricio Campos
 % Introduction
 \section{Introduction} \label{sec:intro}
 
-Many scientific fields involve the analysis of network data. Applications include social networks, networks in statistical mechanics, biological networks, and information networks \citep{goldenberg2010survey}. As a result the statistics and machine learning communities have developed a plethora of methods for understanding networks in recent years. A large subset of these methods involve the nonparametric estimation of a special function known as a graphon \citep{borgs2008graphon, chatterjee2015univsvd, chan2014histo}. Just as in nonparametric function estimation with i.i.d data and a fixed design, it is important to known the optimal rate of convergence of such nonparametric graphon estimators. Such a rate allows one to determine whether certain proposed estimating procedures can be improved upon. In the remainder of this paper we will review the article by Gao and Zhu \citep{gao2015optgraphon}, which derives this minimax optimal rate for nonparameteric graphon estimation. In fact, there are two rates of convergence that we will cover. Each rate corresponds to certain assumptions made about the underlying graph generating process. The first rate pertains to estimation under the stochastic block model. The second rate only assumes that the graphon function belongs to an appropriate smoothness class.
+Many scientific fields involve the analysis of network data. Applications include social networks, networks in statistical mechanics, biological networks, and information networks \citep{goldenberg2010survey}. As a result the statistics and machine learning communities have developed a plethora of methods for understanding networks in recent years. A large collection of these methods involve the nonparametric estimation of a special function known as a graphon \citep{borgs2008graphon, chatterjee2015univsvd, chan2014histo}. Just as in nonparametric function estimation with i.i.d data and a fixed design, it is important to known the optimal rate of convergence of such nonparametric graphon estimators. Such a rate allows one to determine whether certain proposed estimating procedures can be improved upon. In the remainder of this paper we will review the article by Gao and Zhu \citep{gao2015optgraphon}, which derives this minimax optimal rate for nonparameteric graphon estimation. In fact, there are two rates of convergence that we will cover. Each rate corresponds to certain assumptions made about the underlying graph generating process. The first rate pertains to estimation under the stochastic block model. The second rate only assumes that the graphon function belongs to an appropriate smoothness class.
 
 % Notation and Assumptions
 \section{Notation and Assumptions} \label{sec:not}
 
-We will begin by outlining the details of the estimation problem. We consider an undirected graph with $n$ nodes and no self-loops. The edges of the graph are encoded in a binary matrix $\set{A_{ij}} \in \set{0, 1}^{n \times n}$ known as an adjacency matrix. Note that the $\Adj$ entry of the adjacency matrix is 1 if node $i$ and $j$ are connected in the underlying graph and 0 otherwise. Since the graph is undirected, the adjacency matrix is symmetric, i.e. $A_{ij} = A_{ji}$. The absence of self-loops implies $A_{ii} = 0$. The underlying probabilistic model is
-
-\begin{align}
-A_{ij} &= A_{ji} \sim \Bern(\theta_{ij}) \\
-\theta_{ij} &= f(\xi_{i}, \xi_{j}), \quad i \neq j \in \brackets{n}.
-\end{align}
+We will begin by outlining the details of the estimation problem. We consider an undirected graph with $n$ nodes and no self-loops. The edges of the graph are encoded in a binary matrix $\set{A_{ij}} \in \set{0, 1}^{n \times n}$ known as an adjacency matrix. Note that the $\Adj$ entry of the adjacency matrix is 1 if node $i$ and $j$ are connected in the underlying graph and 0 otherwise. Since the graph is undirected, the adjacency matrix is symmetric, i.e. $A_{ij} = A_{ji}$. The absence of self-loops implies $A_{ii} = 0$. The underlying probabilistic model for the adjacency matrix is
+\begin{equation}\label{eq:graph_model}
+\begin{aligned}
+\xi_i &\overset{\text{iid}}{\sim} \GraphonDist, \quad i \in \brackets{n} \\
+\theta_{ij} &= f(\xi_{i}, \xi_{j}), \quad i \neq j \in \brackets{n} \\
+A_{ij} &= A_{ji} \sim \Bern(\theta_{ij}).
+\end{aligned}
+\end{equation}
+where $\GraphonDist$ is a distribution supported on $[0, 1]^n$. Often, $\GraphonDist$ is assumed to be a uniform distribution on the unit interval; however, the results in the paper do not rely on this restriction. A key assumption of this model is that entries of the adjacency matrix $\set{A_{ij}}$ are independent given a collection of unobserved pairs of random variables $\latentvars$. Furthermore, the latent variables are linked to the connection probabilities through a symmetric function $\graphon$ known as a graphon. Knowledge of the graphon underlying the network could be used to compare networks or for the task of link prediction. Therefore, the graphon is often of interest to the practitioner and many techniques have been developed to estimate it. More formally, under the probabilistic model in \ref{eq:graph_model}, the goal of the estimation problem is to estimate $\graphon$ given an observed adjacency matrix, but without an observed design.
 
 \bibliographystyle{asa}
 \bibliography{reference}
