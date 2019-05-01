@@ -33,12 +33,48 @@ A_{ij} &= A_{ji} \sim \Bern(\theta_{ij}).
 where $\GraphonDist$ is a distribution supported on $[0, 1]^n$. Often, $\GraphonDist$ is assumed to be a uniform distribution on the unit interval; however, the results in the paper do not rely on this restriction. A key assumption of this model is that entries of the adjacency matrix $\set{A_{ij}}$ are independent given a collection of unobserved pairs of random variables $\latentvars$. Furthermore, the latent variables are linked to the probability that nodes $i$ and $j$ form an edge through a symmetric function $\graphon$ known as a graphon. This graphon function is the primary object of interest under the model in \ref{eq:graph_model}. Knowledge of this object allows one to compare two different networks or to make predictions about future links in the network.
 For this reason, the goal of the estimation problem is to estimate $\graphon$ given the observed adjacency matrix, but with an unobserved design due to the presence of the latent variables $\latentvars$.
 
-Gao and Zhu consider estimation under a squared error loss. This loss function leads to the following empirical risk minimization criteria:
+Gao and Zhu consider estimation of $\graphon$ under a squared error loss. This loss function leads to the following empirical risk minimization criteria:
 \begin{equation}\label{eq:loss_func}
 \frac{1}{n^2}\sum_{i, j \in \brackets{n}}(\hat{f}(\xi_i, \xi_j) - f(\xi_i, \xi_j))^2 =
 \frac{1}{n^2}\sum_{i, j \in \brackets{n}}(\hat{\theta}_{ij} - \theta_{ij})^2
 \end{equation}
-Which equivalent formulations of the empirical loss in \ref{eq:loss_func} we will use depends on the further assumptions we will make on the graphon. In the stochastic block model it makes more sense to refer to the second equation, while for a general smooth $f$ it clearer to work with the first formulation.
+Note that estimating $\graphon$ is equivalent to estimating each pairwise probability $\edgeproba$. Due to the unobserved design, this estimation problem is only made possible by imposing certain structure on the connection probabilities. In this paper they consider two widely used restrictions: the stochastic block model and the assumption that $\graphon$ belongs to a H\"older class $\holder$ with smoothness $\alpha$. To describe the restrictions in detail we need some notation. Let $\partitions = \set{z : \brackets{n} \rightarrow \brackets{k}}$ be the collection of all possible $k^n$ partition mappings (order matters in the mapping) of the numbers $1, \dots, n$. In particular, the sets $\set{z^{-1}(a) : a \in \brackets{k}}$ form a partition of $\brackets{n}$. In more detail, the two restrictions are as follows:
+
+\begin{assump}\label{assump:sbm}
+\textit{Stochastic Block Model with k clusters or SBM($k$)}
+
+\noindent
+The SBM($k$) assumes that the edges are partitioned into $k$ clusters with different probabilities assigned to a connection between members sharing a cluster assignment and those in different clusters. This means that there are $k^2$ different connection probabilities in the model. Denote by $\set{Q_{ab}} \in \mathbb{R}^{k \times k}$ the matrix whose $ab$ entry is the probability that cluster $a$ and $b$ form a connection. However, since the nodes are not ordered by cluster, the possible values of $\edgeprobas$ must allow for all possible permutations. This is captured in the following restricted parameter space for $\edgeprobas$:
+\begin{equation}
+\begin{aligned}
+\Theta_k = \set{&\edgeprobas \in [0, 1]^{n \times n} : \theta_{ii} = 0, \edgeproba = Q_{ab} = Q_{ba}\\
+    & \text{for} \, (i, j) \in z^{-1}(a) \times z^{-1}(b) \, \text{for some} \, Q_{ab} \in [0, 1] \, \text{and} \, z \in \partitions}
+\end{aligned}
+\end{equation}
+\end{assump}
+
+
+\begin{assump}\label{assump:holder}
+\textit{Nonparametric graphon estimation in $\holder$}
+
+\noindent
+The second assumption requires the definition of an appropriate H\"older class for bi-variate functions (in class we just discussed H\"older classes for univariate functions). Since $\graphon$ is symmetric, without loss of generality we restrict the behavior of $f$ for $x \geq y$. Let $\mathcal{D} = \set{(x, y) \in [0, 1]^2 : x \geq y}$ Define the mixed partial derivative of order $j + k$ as
+\begin{equation}
+\nabla_{jk} f(x, y) = \frac{\partial^{j+k}}{(\partial x)^j (\partial y)^k}f(x, y)
+\end{equation}
+where $\nabla_{00} f(x, y) = f(x, y)$. The H\"older norm on $\mathcal{D}$ is then defined as
+\begin{equation}
+\begin{aligned}
+\norm{f}_{\mathcal{F}_{\alpha}} = &\max_{j + k \leq \floor{\alpha}} \sup_{x,y \in \mathcal{D}} \abs{\nabla_{jk}f(x, y)} \ + \\
+& \max_{j + k = \floor{\alpha}} \sup_{(x, y) \neq (x', y') \in \mathcal{D}}
+\frac{\abs{\nabla_{jk}f(x,y) - \nabla_{jk}f(x', y')}}{(\abs{x - x'} + \abs{y -y'})^{\alpha - \floor{\alpha}}}
+\end{aligned}
+\end{equation}
+We then restrict $\graphon$ to the following H\"older class:
+\begin{equation}
+\holder = \set{f \in [0, 1] : \norm{f}_{\mathcal{F}_{\alpha}} \leq M \text{ and } f(x, y) = f(y, x) \text{ for } x \geq y}
+\end{equation}
+\end{assump}
 
 \section{Key Results} \label{sec:key_results}
 
