@@ -78,6 +78,28 @@ We then restrict $\graphon$ to the following H\"older class:
 
 \section{Key Results} \label{sec:key_results}
 
+The main contributions of the paper are deriving the minimax rates of estimation for Assumption \ref{assump:sbm} and Assumption \ref{assump:holder}. The results are summarized in the following two theorems:
+
+\begin{theorem}
+Under the SBM($k$), we have
+\begin{equation}
+\inf_{\hat{\theta}} \sup_{\theta \in \Theta_k} \mathbb{E}\left\{\frac{1}{n^2} \sum_{i,j \in \brackets{n}} (\hat{\theta}_{ij} - \theta_{ij})^2\right\} \asymp \frac{k^2}{n^2} + \frac{\log k}{n}
+\end{equation}
+for any $1 \leq k \leq n$.
+\end{theorem}
+
+\begin{theorem}
+Consider the H\"older class $\holder$. We have
+\begin{equation}
+\inf_{\hat{\theta}} \sup_{f \in \holder} \sup_{\xi \sim \Dist_{\xi}}\mathbb{E}\left\{\frac{1}{n^2} \sum_{i,j \in \brackets{n}} (\hat{\theta}_{ij} - \theta_{ij})^2\right\} \asymp
+\begin{cases}
+n^{-2\alpha/(\alpha + 1)}, \quad 0 \leq \alpha \leq 1 \\
+\frac{\log n}{n}, \quad \alpha \geq 1,
+\end{cases}
+\end{equation}
+where the expectation is jointly over $\Adj$ and $\set{\xi_i}$.
+\end{theorem}
+
 \bibliographystyle{asa}
 \bibliography{reference}
 
