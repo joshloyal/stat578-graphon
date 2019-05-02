@@ -115,6 +115,59 @@ Before moving onto the proofs, it is worth discussing an important decomposition
 
 
 \subsection{Lower Bound SBM($k$)} \label{sec:lower_sbm}
+Note that the lower bound of the expectation in Theorem \ref{thm:sbm} is equivalent to a lower bound of the following probability (Markov Inequality):
+\begin{equation}
+\begin{aligned}
+&\inf_{\hat{\theta}} \sup_{\theta \in \Theta_k} \Dist \left\{ \frac{1}{n^2}\sum_{i,j \in \brackets{n}} (\hat{\theta}_{ij} - \theta_{ij})^2 \geq \epsilon^2\right\}  \\
+&= \inf_{\hat{\theta}} \sup_{Q = Q^T \in [0, 1]^{k \times k}} \sup_{z \in \partitions} \Dist \left\{ \frac{1}{n^2}\sum_{i,j \in \brackets{n}} (\hat{\theta}_{ij} - Q_{z(i), z(j)})^2 \geq \epsilon^2\right\}
+\end{aligned}
+\end{equation}
+for any $\epsilon > 0$. We can now see how the clustering and nonparametric rate come into the bound. We have a supremum over both the group probabilities $Q$ and the cluster assignments $z$. Just as in class, the proof of the in-probability lower bound is an application of Fano's Lemma. To apply Fano's Lemma we restrict the supremum of $\Theta_k$ to a subset $T \subset \Theta_k$ with a finite packing number $\mathcal{M}(2 \epsilon, T, \rho)$. In this case we can restrict $\Theta_k$ in two different ways. The first way fixes $z \in \partitions$ and then finds an appropriate packing as $Q$ varies. This leads to the nonparametric rate. The second way fixes $Q$ and finds an appropriate packing as $z$ varies. This leads to the clustering rate. As a result we will have two lower bounds, which we can then combine using what is essentially a union bound argument. We start with the nonparametric rate.
+
+\textit{Nonparametric rate:} The nonparametric rate actually utilizes a version of Fano's Lemma in terms of the $\chi^2$ distance instead of the Kullback-Leibler distance. The statement is as follows:
+\begin{equation}\label{eq:chi2_fano}
+\inf_{\hat{\theta}} \sup_{\theta \in \Theta} \Dist_{\theta} \left\{ \rho^2(\hat{\theta}, \theta)  \geq \frac{\epsilon^2}{4} \right\} \geq 1 - \frac{1}{\packing} - \sqrt{\frac{\dchisq{T}}{\packing}}.
+\end{equation}
+where $\dchisq{T} = \sup_{\theta, \theta'}\chi^2(\Dist_{\theta} || \Dist_{\theta'})$. Furthermore, note that $\rho(\theta, \theta') = \frac{1}{n^2} \sum_{ij}(\theta_{ij} - \theta_{ij}')^2$ and $\Dist_{\theta} = \bigotimes_{i,j \in \brackets{n}} \Bern(\theta_{ij})$. Thus, the proof has two steps: for an appropriate subset $T$ we need to 1. upper bound $\dchisq{T}$ and 2. lower bound the packing number $\packing$. Since $\Dist_{\theta}$ is just a collection of independent Bernoulli's it is straightforward to bound $\chi^2(\Dist_{\theta} || \Dist_{\theta'})$:
+\begin{align*}
+\chi^2(\Dist_{\theta} || \Dist_{\theta'}) &= \prod_{ij}\left( \theta_{ij}' \left(\frac{\theta_{ij}}{\theta_{ij}'}\right)^2  +  (1 - \theta_{ij}') \left(\frac{1 - \theta_{ij}}{1 - \theta_{ij}'}\right)^2\right)  - 1 \\
+&= \prod_{ij}\left(1 - \frac{(\theta_{ij} - \theta_{ij}')^2}{\theta_{ij}' ( 1- \theta_{ij}')}\right) - 1 \\
+&\leq \exp\left(\sum_{ij} \log(1 - 8 (\theta_{ij} - \theta_{ij}')^2)\right) - 1 \\
+&\leq \exp\left(8 \sum_{ij} (\theta_{ij} - \theta_{ij}')^2 \right)
+\end{align*}
+where we are using the fact that $\log(x) \leq x - 1$ for $x > 0$ and we will latter have to restrict $T$ so that $\theta_{ij}' \in [1/4, 3/4]$.
+
+To proceed further we need to find an appropriate subset $T$. Gao and Zhu use the following construction, which relies on a Varshamov-Gilbert bound to obtain an appropriate packing. Recall for this rate we are free to choose $z$. A simple choice is a balanced partitioning. Without loss of generality we can assume $n / k$ and $k / 2$ are integers. A balanced partition then sets the partition mapping for each $a \in \brackets{k}$ as $z^{-1}(a) = \set{(a-1)n/k + 1, \dots, an/k}$. Note that there are $n/k$ nodes assigned to each cluster. We can then define $Q^{\omega} = (Q_{ab}^{\omega})_{k \times k}$ by
+\begin{equation}
+\begin{aligned}
+Q^{\omega}_{ab} &= Q^{\omega}_{ba} = \frac{1}{2} + \frac{c_1 k}{n} \omega_{ab} \quad \text{for } a > b \in \brackets{k}, \\
+Q_{aa}^{\omega} &= \frac{1}{2} \quad \text{for } a \in \brackets{k}.
+\end{aligned}
+\end{equation}
+where $\omega_{ab} \in \HyperCube$ with $d = k(k-1)/2$ (number of entries we need to fix in $Q_{ab}$), and $c_1$ is a constant introduced to satisfy $\theta_{ij}' \in [1/4, 3/4]$ in the bound of the $\chi^2$ distance. We are now ready to define our subset $T$. Let $\theta^{\omega} = (\theta_{ij}^{\omega})_{n \times n}$ with $\theta_{ij}^{\omega} = Q_{z(i)z(j)}^{\omega}$ for $i \neq j$ and $\theta_{ii}^{\omega} = 0$. Then let $T_1 = \set{\theta^{\omega} : \omega \in \HyperCube}$. The bound on the $\chi^2$ distance is straightforward:
+\begin{equation}
+\begin{aligned}
+\chi^2(\Dist_{\theta^{\omega}} || \Dist_{\theta^{\omega'}}) &\leq \exp\left(8 \sum_{ij} (\theta_{ij}^{\omega} - \theta_{ij}^{\omega'})^2\right) \\
+&= \exp\left(\frac{8 n^2}{k^2} \sum_{ab} (Q_{ab}^{\omega} - Q_{ab}^{\omega'})^2\right)
+\leq \exp(8 c_1^2 k^2).
+\end{aligned}
+\end{equation}
+where $c_1$ is chosen small enough. We lower bound the packing number through the VG Lemma, i.e.
+we can find a subset $S \subset \HyperCube$ such that 1. $|S| \geq \exp(d/8)$ and 2. $\rho_{H}(\omega, \omega') \geq d/4$. Thus,
+\begin{equation}
+\rho^2(\theta^{\omega}, \theta^{\omega'}) \geq \frac{1}{k^2} \sum_{1 \leq b < a \leq k} (Q_{ab}^{\omega} - Q_{ab}^{\omega'})^2 = \frac{c_1^2}{n^2} \rho_{H}(\omega, \omega').\geq \frac{c_1^2 d}{4 n^2} = .\frac{c_1^2 k(k-1)}{8 n^2}
+\end{equation}
+This implies
+\begin{equation}
+\mathcal{M}\left(\frac{c_1^2 k(k-1)}{8 n^2}, T_1, \rho\right) \geq |S| \geq \exp(d/8).
+\end{equation}
+We can then combine these bounds with Equation \ref{eq:chi2_fano} to conclude that with a constant $C_1$ chosen large enough
+\begin{equation}
+\inf_{\hat{\theta}} \sup_{\theta \in T_1} \Dist \left\{\frac{1}{n^2} \sum_{ij} (\hat{\theta}_{ij} - \theta_{ij})^2 \geq \frac{C_1 k^2}{n^2} \right\} \geq 0.9.
+\end{equation}
+
+\textit{Clustering rate:}
+
 
 \subsection{Upper Bound H\"older Class} \label{sec:upper_hold}
 
