@@ -44,7 +44,7 @@ Note that estimating $\graphon$ is equivalent to estimating each pairwise probab
 \textit{Stochastic Block Model with k clusters or SBM($k$)}
 
 \noindent
-The SBM($k$) assumes that the edges are partitioned into $k$ clusters with different probabilities assigned to a connection between members sharing a cluster assignment and those in different clusters. This means that there are $k^2$ different connection probabilities in the model. Denote by $\set{Q_{ab}} \in \mathbb{R}^{k \times k}$ the matrix whose $ab$ entry is the probability that cluster $a$ and $b$ form a connection. However, since the nodes are not ordered by cluster, the possible values of $\edgeprobas$ must allow for all possible permutations. This is captured in the following restricted parameter space for $\edgeprobas$:
+The SBM($k$) assumes that the edges are partitioned into $k$ clusters with different probabilities assigned to a connection between members sharing a cluster assignment and those in different clusters. This means that there are $k^2$ different connection probabilities in the model. Denote by $\set{Q_{ab}} \in [0, 1]^{k \times k}$ the matrix whose $ab$ entry is the probability that cluster $a$ and $b$ form a connection. However, since the nodes are not ordered by cluster, the possible values of $\edgeprobas$ must allow for all possible permutations. This is captured in the following restricted parameter space for $\edgeprobas$:
 \begin{equation}
 \begin{aligned}
 \Theta_k = \set{&\edgeprobas \in [0, 1]^{n \times n} : \theta_{ii} = 0, \edgeproba = Q_{ab} = Q_{ba}\\
@@ -76,11 +76,17 @@ We then restrict $\graphon$ to the following H\"older class:
 \end{equation}
 \end{assump}
 
+Before stating the key results of the paper, it is worth pointing out the behavior of $\holder$ functions when $\alpha \in (0, 1]$. It is easy to see that this regime of smoothness parameter implies the Liptchitz condition
+\begin{equation}
+\abs{f(x,y) - f(x', y')} \leq M (\abs{x - x'} + \abs{y - y'})^{\alpha}.
+\end{equation}
+Such a nice interpretation is important because we will later see that this regime of smoothness parameter results in a minimax rate that mimics the well known minimax rate for nonparametric regression with a fixed design.
+
 \section{Key Results} \label{sec:key_results}
 
 The main contributions of the paper are deriving the minimax rates of estimation for Assumption \ref{assump:sbm} and Assumption \ref{assump:holder}. The results are summarized in the following two theorems:
 
-\begin{theorem}
+\begin{theorem} \label{thm:sbm}
 Under the SBM($k$), we have
 \begin{equation}
 \inf_{\hat{\theta}} \sup_{\theta \in \Theta_k} \mathbb{E}\left\{\frac{1}{n^2} \sum_{i,j \in \brackets{n}} (\hat{\theta}_{ij} - \theta_{ij})^2\right\} \asymp \frac{k^2}{n^2} + \frac{\log k}{n}
@@ -88,7 +94,7 @@ Under the SBM($k$), we have
 for any $1 \leq k \leq n$.
 \end{theorem}
 
-\begin{theorem}
+\begin{theorem}\label{thm:nonparam}
 Consider the H\"older class $\holder$. We have
 \begin{equation}
 \inf_{\hat{\theta}} \sup_{f \in \holder} \sup_{\xi \sim \Dist_{\xi}}\mathbb{E}\left\{\frac{1}{n^2} \sum_{i,j \in \brackets{n}} (\hat{\theta}_{ij} - \theta_{ij})^2\right\} \asymp
@@ -99,6 +105,18 @@ n^{-2\alpha/(\alpha + 1)}, \quad 0 \leq \alpha \leq 1 \\
 \end{equation}
 where the expectation is jointly over $\Adj$ and $\set{\xi_i}$.
 \end{theorem}
+
+Before moving onto the proofs, it is worth discussing an important decomposition of the rates in Theorem \ref{thm:sbm} and \ref{thm:nonparam} pointed out by Gao and Zhu. They breakdown the rates into the \textit{clustering rate} and \textit{nonparametric rate}. Intuitively these rates come about due to the two types of quantities one has to estimate in the graphon problem. At a high level the clustering rate comes about due to the unknown design of the latent variables $\xi_i$. In the SBM($k$) this is equivalent to the estimation of the group assignments of the nodes. This is the origin of the $k^2/n^2$ term in Theorem \ref{thm:sbm} and the $n^{-2\alpha/(\alpha + 1)}$ term in Theorem \ref{thm:nonparam}. On the other hand the nonparametric rate is due to the estimation of the nonparametric graphon function $\graphon$. This results in the $n^{-1} \log k$ and the $n^{-1} \log n$ terms in the theorems. In the SBM($k$) this is equivalent to estimating the cluster probability matrix $\set{Q_{ab}} \in [0, 1]^{k \times k}$. The difficulty of the problem is then due to the difficulty of these two subproblems. Characterizing the difficulty of these subproblems is essentially the crux of proving the lower bounds in these theorems.
+
+\section{Proof Outlines}\label{sec:proofs}
+
+\subsection{Upper Bound SBM($k$)} \label{sec:upper_sbm}
+
+\subsection{Lower Bound SBM($k$)} \label{sec:lower_sbm}
+
+\subsection{Upper Bound H\"older Class} \label{sec:upper_hold}
+
+\subsection{Lower Bound H\"older Class} \label{sec:lower_hold}
 
 \bibliographystyle{asa}
 \bibliography{reference}
