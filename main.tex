@@ -153,23 +153,23 @@ Before moving onto the proofs, it is worth discussing an important decomposition
 
 \subsection{Upper Bound SBM($k$)} \label{sec:upper_sbm}
 
-Before stating the proof it would be useful to indicate some more notation. Let us indicate the true value on each block by $\set{Q^\ast_{ab}} \in \brackets{0,1}^{k \times k}$ and the oracle assignment by $z^\ast \in \partitions$ such that $\theta_{ij} = Q^\ast_{z^\ast(i)z^\ast(j)}$ for any $i\neq j$. Also, for the estimated partition function $\hat{z}$, define $\set{\tilde{Q}_{ab}} \in \brackets{0,1}^{k \times k}$  by $\tilde{Q}_{ab} = \bar{\theta}_{ab}(\hat{z})$, and also define $\ttheta_{ij}=\tilde{Q}_{\hat{z}(i)\hat{z}(j)}$ for any $i \neq j$ and as zero for the diagonal elements. 
+Before stating the proof it would be useful to indicate some more notation. Let us indicate the true value on each block by $\set{Q^\ast_{ab}} \in \brackets{0,1}^{k \times k}$ and the oracle assignment by $z^\ast \in \partitions$ such that $\theta_{ij} = Q^\ast_{z^\ast(i)z^\ast(j)}$ for any $i\neq j$. Also, for the estimated partition function $\hat{z}$, define $\set{\tilde{Q}_{ab}} \in \brackets{0,1}^{k \times k}$  by $\tilde{Q}_{ab} = \bar{\theta}_{ab}(\hat{z})$, and also define $\ttheta_{ij}=\tilde{Q}_{\hat{z}(i)\hat{z}(j)}$ for any $i \neq j$ and as zero for the diagonal elements.
 
-By definition, we have $L(\hat{Q},\hat{z}) \leq L(Q^\ast, z^\ast)$ which can be rewritten as 
+By definition, we have $L(\hat{Q},\hat{z}) \leq L(Q^\ast, z^\ast)$ which can be rewritten as
 \[ \norm{\htheta - A}^2 \leq \norm{\theta - A}^2 \]
 
 We can decompose $\norm{\htheta - A}^2$ as $\norm{\htheta - \theta}^2 + 2\dprod{\htheta - \theta, \theta - A} + \norm{\theta - A}$ and combining all this we get
 
 \[  \norm{\htheta - \theta}^2 \leq 2\dprod{\htheta - \theta, \theta - A}  \]
 
-The right-hand side of the previous inequality can further be bounded as 
+The right-hand side of the previous inequality can further be bounded as
 
 \begin{align*}
     \dprod{\htheta - \theta, \theta - A} & \leq \norm{\htheta - \ttheta}\abs*{\dprod*{\frac{\htheta-\ttheta}{\norm{\htheta - \ttheta}}, A - \theta  }} \\
   & \quad + (\norm{\ttheta - \htheta} + \norm{\htheta - \theta})\abs*{\dprod*{\frac{\ttheta-\theta}{\norm{\ttheta-\theta}},A-\theta}}
 \end{align*}
 
-The authors then make use of three Lemmas that give upper bounds for $\norm{\htheta-\ttheta}$, $\abs*{\dprod*{\frac{\ttheta-\ttheta}{\norm{\ttheta-\ttheta}},A-\theta}}$ and $\abs*{\dprod*{\frac{\ttheta-\theta}{\norm{\ttheta-\theta}},A-\theta}}$. All these terms can be bounded by $C\sqrt{k^2 +n\log k}$ with probability at least $1-3\exp(-C^\prime n\log k)$. 
+The authors then make use of three Lemmas that give upper bounds for $\norm{\htheta-\ttheta}$, $\abs*{\dprod*{\frac{\ttheta-\ttheta}{\norm{\ttheta-\ttheta}},A-\theta}}$ and $\abs*{\dprod*{\frac{\ttheta-\theta}{\norm{\ttheta-\theta}},A-\theta}}$. All these terms can be bounded by $C\sqrt{k^2 +n\log k}$ with probability at least $1-3\exp(-C^\prime n\log k)$.
 
 Combining the bounds, we have
 
@@ -262,18 +262,18 @@ The key step is then defining the following subset of $\partitions$:
 \begin{equation}
 \begin{aligned}
 \Z = \set{&z \in \partitions : |z^{-1}(a)| = \frac{n}{k} \text{ for } a \in \brackets{k} \\
-          &z^{-1}(a) = \brackets{\frac{(a-1)n}{k} + 1, \dots, \frac{an}{k}} \text{ for } a \in \brackets{k/2}}
+          &z^{-1}(a) = \set{\frac{(a-1)n}{k} + 1, \dots, \frac{an}{k}} \text{ for } a \in \brackets{k/2}}
 \end{aligned}
 \end{equation}
-Again we are restricting the partitions to equal sizes with $n/k$ nodes in each. However, only the first $n/2$ nodes have known assignments shared between all elements of $\Z$. The remaining node assignments can change between $z, z' \in \Z$. We are now ready to identify the subspace of $\Theta_k$ we will apply Fano's Lemma over. For each $z \in \Z$ define $\theta^{z}$ by $\theta_{ij}^z = Q_{z(i)z(j)}$ for $i \neq j$ and $\theta_{ii}^z = 0$ otherwise. The subpsace we consider is then $T_2 = \set{\theta^{z} : z \in \Z}$. Note that if we define $S = \set{i : i \in z^{-1}(a) \text{ for } a \in \floor{k/2}}$.
+Again we are restricting the partitions to equal sizes with $n/k$ nodes in each. However, only the first $n/2$ nodes have known assignments shared between all elements of $\Z$. The remaining node assignments can change between $z, z' \in \Z$ and are unknown. Therefore this construction keeps the key difficulty of the problem, i.e. estimating the cluster assignments. We are now ready to identify the subspace of $\Theta_k$ we will apply Fano's Lemma over. For each $z \in \Z$ define $\theta^{z}$ by $\theta_{ij}^z = Q_{z(i)z(j)}$ for $i \neq j$ and $\theta_{ii}^z = 0$ otherwise. The subpsace we consider is then $T_2 = \set{\theta^{z} : z \in \Z}$. Note that if we define $J = \set{i : i \in z^{-1}(a) \text{ for } a \in \floor{k/2}}$ we have
 \begin{table}[htbp]
 \begin{center}
 \def\arraystretch{2.5}
 \begin{tabular}{@{}cc|c@{\hspace{0.25cm}}|c@{\hspace{0.25cm}}|@{}}
-\multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{$S$} & \multicolumn{1}{c}{$S^c$}  \\
+\multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{$J$} & \multicolumn{1}{c}{$J^c$}  \\
 \cline{3-4}
-\multirow{2}{*}{$\theta^z = $} & $S$ &  0  & $B_{z(i)z(j)}$ \\\cline{3-4}
-                               & $S^c$ &  $B_{z(i)z(j)}$  & 0 \\\cline{3-4}
+\multirow{2}{*}{$\theta^z = $} & $J$ &  0  & $B_{z(i)z(j)}$ \\\cline{3-4}
+                               & $J^c$ &  $B_{z(i)z(j)}$  & 0 \\\cline{3-4}
 \end{tabular}
 \end{center}
 \end{table}
@@ -284,19 +284,51 @@ The lower bounding procedure is the same as before: first we upper bound the KL 
 \leq 8 n^2 c_2 \frac{\log k}{n} = 8 c_2 n \log k.
 \end{equation}
 since the maximum difference between two entries of $B$ is $\sqrt{n^{-1}c_2 \log k}$.
+
+The lower bounding of the packing number is more involved. The key observation is that the sets $T_2$ and $\Z$ are in one-to-one correspondence due to the construction of $B$ (its sparse enough that we can untangle the clustering). Thus, $\log \mathcal{M}(\epsilon, T_2, \rho) = \log \mathcal{M}(\epsilon, \Z, \rho_1)$ for some metric $\rho_1$ on $\Z$ defined by $\rho_1(z, w) = \rho(\theta^z, \theta^w)$. Now let $S$ be a packing set in $\Z$ with cardinality $\mathcal{M}(\epsilon, \Z, \rho_1)$.  Given any $z \in \Z$ define its $\epsilon$-neighborhood by $\epsball{z} = \set{w \in \Z : \rho_1(z, w) \leq \epsilon}$. As we have shown before, $S$ also a covering set of $\Z$. This means $\bigcup_{z \in S} \epsball{z} = \Z$. We then have this standard bound:
+\begin{equation}
+|\Z| \leq \sum_{z \in S}|\epsball{z}| \leq |S| \max_{z \in S}|\epsball{z}|
+\end{equation}
+which by definition implies
+\begin{equation}
+\mathcal{M}(\epsilon, \Z, \rho_1) = |S| \geq \frac{|\Z|}{\max_{z \in S} |\epsball{z}|}.
+\end{equation}
+What remains then is to lower bound $|\Z|$ and upper bound $\max_{z \in S} |\epsball{z}|$.
+
+To upper bound $\max_{z \in S} |\epsball{z}|$ we have the freedom to choose $\epsilon$. Note that
+\begin{equation}
+\begin{aligned}
+\rho_1^2(z, w) &= \rho^2(\theta^z, \theta^w) \\
+               &= \frac{1}{n^2} \sum_{n/2 < j \leq n}\norm{B_{z(j)} - B_{w(j)}}^2 \\
+               &\geq \frac{c_2 \log k}{8 n^2} |\set{j : w(j) \neq z(j)}|.
+\end{aligned}
+\end{equation}
+by the construction of $\Z$ and $B$. Therefore, if we set $\epsilon^2 = (c_2 \log k)/(48 n)$ we have that $|\set{j : w(j) \neq z(j)}| < n/6$. This implies that $|\epsball{z}|$ is bounded by the number of ways of choosing $n/6$ from $n$ and assigning them to $k$ clusters:
+\begin{equation}
+|\epsball{z}| \leq {n \choose n/6} k^{n/6} \leq \exp\left(\frac{1}{4} n \log k\right).
+\end{equation}
+Finally, we can lower bound $|\Z|$ (the number of ways to assign $n/2$ items to $k/2$ clusters of equal size $n/k$) using Stirling's formula:
+\begin{equation}
+|\Z| = \frac{(n/2)!}{[(n/k)!]^{k/2}} \geq \exp\left(\frac{1}{3} n \log k\right).
+\end{equation}
+Combining these two bounds we have a bound on the packing number: $\log \mathcal{M}(\epsilon, T_2, \rho) = \log \mathcal{M}(\epsilon, \Z, \rho_1) \geq (1/12) n \log k$. Finally, applying Fano's Lemma we have that for $c_2$ and $k$ sufficiently large there exists a constant $C_2 > 0$ such that:
+\begin{equation}
+\inf_{\htheta} \sup_{\theta \in T_2} \Dist \left\{ \frac{1}{n^2} \sum_{ij} (\htheta_{ij} - \theta_{ij})^2 \geq \frac{C_2 \log k}{n} \right\} \geq 0.9.
+\end{equation}
+
 \subsection{Upper Bound H\"older Class} \label{sec:upper_hold}
 
-Let us redefine the $z^\ast$ and $Q^\ast$ used in the proof of the upper bound for the SBM. Choose $z^\ast$ that satisfies 
+Let us redefine the $z^\ast$ and $Q^\ast$ used in the proof of the upper bound for the SBM. Choose $z^\ast$ that satisfies
 
 \[ \frac{1}{n^2} \sum_{a,b\in \brackets{k}} \sum_{i\neq j: z^\ast(i)=a, z^\ast(j)=b} (\theta_{ij} -\bar{\theta}_{ab}(z^\ast)  )^2 \neq CM^2 \left( \frac{1}{k^2} \right)^{\alpha \wedge 1}  \],
 
-for some universal constant $C >0$. The authors present the existence of such a $z^\ast$ under the H\"older class $\holder$ via a Lemma. Choosing the partition function in this manner implies a good approximation of $\set{\theta_{ij}}$ by the stochastic block model. With this $z^\ast$, define $Q^\ast_{ab} = \bar{\theta}_{ab}(z^\ast)$ for any $a,b \in \brackets{k}$. Lastly, define $\theta^\ast_{ij} = Q^\ast_{z^\ast(i)z^\ast(j)}$ for all $i \neq j$, with diagonal elements set to zero. 
+for some universal constant $C >0$. The authors present the existence of such a $z^\ast$ under the H\"older class $\holder$ via a Lemma. Choosing the partition function in this manner implies a good approximation of $\set{\theta_{ij}}$ by the stochastic block model. With this $z^\ast$, define $Q^\ast_{ab} = \bar{\theta}_{ab}(z^\ast)$ for any $a,b \in \brackets{k}$. Lastly, define $\theta^\ast_{ij} = Q^\ast_{z^\ast(i)z^\ast(j)}$ for all $i \neq j$, with diagonal elements set to zero.
 
 Similar to the upper bounds for the stochastic block model, we will use a result that states that for any constant $C^\prime > 0$, there exists a constant $C>0$ only depending on $C^\prime$, such that
 
 \[  \abs{\dprod{\frac{\ttheta - \atheta}{\norm{\ttheta-\atheta}}, A-\theta}} \leq C\sqrt{n\log k},  \]
 
-with probability at least $1-\exp(-C^\prime n \log k)$. With this stated we can properly begin the proof. 
+with probability at least $1-\exp(-C^\prime n \log k)$. With this stated we can properly begin the proof.
 
 Similarly to the SBM upper bound proof, we can state
 
@@ -325,8 +357,6 @@ By using the upper bounds mentioned in this section and section 4.1, for any con
 \[ B^2 \leq Cn^2 \left(\frac{1}{k^2}\right)^{\alpha \wedge 1}, \qquad F^2 \leq Cn\log k   \]
 
 \[ R^2 \leq C(k^2 + n\log k), \qquad E^2 \leq C(k^2 + n\log k)   \]
-
-
 
 \subsection{Lower Bound H\"older Class} \label{sec:lower_hold}
 
