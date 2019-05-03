@@ -122,6 +122,7 @@ Before stating the key results of the paper, it is worth pointing out the behavi
 \end{equation}
 Such a nice interpretation is important because we will later see that this regime of smoothness parameter results in a minimax rate that mimics the well known minimax rate for nonparametric regression with a fixed design.
 
+%Key Results
 \section{Key Results} \label{sec:key_results}
 
 The main contributions of the paper are deriving the minimax rates of estimation for Assumption \ref{assump:sbm} and Assumption \ref{assump:holder}. This is done by deriving the lower and upper bounds. The results are summarized in the following two theorems:
@@ -152,7 +153,41 @@ Before moving onto the proofs, it is worth discussing an important decomposition
 
 \subsection{Upper Bound SBM($k$)} \label{sec:upper_sbm}
 
+Before stating the proof it would be useful to indicate some more notation. Let us indicate the true value on each block by $\set{Q^\ast_{ab}} \in \brackets{0,1}^{k \times k}$ and the oracle assignment by $z^\ast \in \partitions$ such that $\theta_{ij} = Q^\ast_{z^\ast(i)z^\ast(j)}$ for any $i\neq j$. Also, for the estimated partition function $\hat{z}$, define $\set{\tilde{Q}_{ab}} \in \brackets{0,1}^{k \times k}$  by $\tilde{Q}_{ab} = \bar{\theta}_{ab}(\hat{z})$, and also define $\ttheta_{ij}=\tilde{Q}_{\hat{z}(i)\hat{z}(j)}$ for any $i \neq j$ and as zero for the diagonal elements. 
 
+By definition, we have $L(\hat{Q},\hat{z}) \leq L(Q^\ast, z^\ast)$ which can be rewritten as 
+\[ \norm{\htheta - A}^2 \leq \norm{\theta - A}^2 \]
+
+We can decompose $\norm{\htheta - A}^2$ as $\norm{\htheta - \theta}^2 + 2\dprod{\htheta - \theta, \theta - A} + \norm{\theta - A}$ and combining all this we get
+
+\[  \norm{\htheta - \theta}^2 \leq 2\dprod{\htheta - \theta, \theta - A}  \]
+
+The right-hand side of the previous inequality can further be bounded as 
+
+\begin{align*}
+    \dprod{\htheta - \theta, \theta - A} & \leq \norm{\htheta - \ttheta}\abs*{\dprod*{\frac{\htheta-\ttheta}{\norm{\htheta - \ttheta}}, A - \theta  }} \\
+  & \quad + (\norm{\ttheta - \htheta} + \norm{\htheta - \theta})\abs*{\dprod*{\frac{\ttheta-\theta}{\norm{\ttheta-\theta}},A-\theta}}
+\end{align*}
+
+The authors then make use of three Lemmas that give upper bounds for $\norm{\htheta-\ttheta}$, $\abs*{\dprod*{\frac{\ttheta-\ttheta}{\norm{\ttheta-\ttheta}},A-\theta}}$ and $\abs*{\dprod*{\frac{\ttheta-\theta}{\norm{\ttheta-\theta}},A-\theta}}$. All these terms can be bounded by $C\sqrt{k^2 +n\log k}$ with probability at least $1-3\exp(-C^\prime n\log k)$. 
+
+Combining the bounds, we have
+
+\[ \norm{\htheta-\theta}^2 \leq 2C\norm{\htheta - \theta}\sqrt{k^2 +n \log k} + 4C^2(k^2 +n\log k),  \]
+
+with probability at least $1-3\exp(-C^\prime n\log k)$. Solving this equation, we get
+
+\[ \norm{\htheta-\theta}^2 \leq C_1 (k^2 + n\log k ) \]
+
+with at least the same probability as stated above. This concludes the high probability bound. For the bound in expectation, we can make use of the following inequality:
+
+\begin{align*}
+    \mathbb{E}n^{-2}\norm{\htheta-\theta}^2 & \leq \mathbb{E}(n^{-2}\norm{\htheta-\theta}^2 \mathbb{I}\set{n^{-2}\norm{\htheta-\theta}^2 \leq \varepsilon^2} ) \\
+    & \quad + \mathbb{E}(n^{-2}\norm{\htheta-\theta}^2 \mathbb{I}\set{n^{-2}\norm{\htheta-\theta}^2 > \varepsilon^2} ) \\
+    & \leq \varepsilon^2 + \mathbb{P}(n^{-2}\norm{\htheta-\theta}^2 > \varepsilon^2) \leq \varepsilon^2 + 3\exp(-C^\prime n\log k),
+\end{align*}
+
+where $\varepsilon^2 = C_1(\frac{k^2}{n^2}+ \frac{\log k}{n})$. Since $\varepsilon^2$ is the dominating term, this completes the proof.
 
 \subsection{Lower Bound SBM($k$)} \label{sec:lower_sbm}
 Note that the lower bound of the expectation in Theorem \ref{thm:sbm} is equivalent to a lower bound of the following probability (Markov Inequality):
@@ -210,6 +245,12 @@ We can then combine these bounds with Equation \ref{eq:chi2_fano} to conclude th
 
 
 \subsection{Upper Bound H\"older Class} \label{sec:upper_hold}
+
+Let us redefine the $z^\ast$ and $Q^\ast$ used in the proof of the upper bound for the SBM. Choose $z^\ast$ that satisfies 
+
+\[ \frac{1}{n^2} \sum_{a,b\in \brackets{k}} \sum_{i\neq j: z^\ast(i)=a, z^\ast(j)=b} (\theta_{ij} -\bar{\theta}_{ab}(z^\ast)  )^2 \neq CM^2 \left( \frac{1}{k^2} \right)^{\alpha \wedge 1}  \],
+
+for some universal constant $C >0$. The authors present the existence of such a $z^\ast$ under the H\"older class $\holder$ via a Lemma. Choosing the partition function in this manner implies a good approximation of $\set{\theta_{ij}}$ by the stochastic block model. 
 
 \subsection{Lower Bound H\"older Class} \label{sec:lower_hold}
 
