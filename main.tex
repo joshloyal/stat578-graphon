@@ -38,7 +38,47 @@ Gao and Zhu consider estimation of $\graphon$ under a squared error loss. This l
 \frac{1}{n^2}\sum_{i, j \in \brackets{n}}(\hat{f}(\xi_i, \xi_j) - f(\xi_i, \xi_j))^2 =
 \frac{1}{n^2}\sum_{i, j \in \brackets{n}}(\hat{\theta}_{ij} - \theta_{ij})^2
 \end{equation}
-Note that estimating $\graphon$ is equivalent to estimating each pairwise probability $\edgeproba$. Due to the unobserved design, this estimation problem is only made possible by imposing certain structure on the connection probabilities. In this paper they consider two widely used restrictions: the stochastic block model and the assumption that $\graphon$ belongs to a H\"older class $\holder$ with smoothness $\alpha$. To describe the restrictions in detail we need some notation. Let $\partitions = \set{z : \brackets{n} \rightarrow \brackets{k}}$ be the collection of all possible $k^n$ partition mappings (order matters in the mapping) of the numbers $1, \dots, n$. In particular, the sets $\set{z^{-1}(a) : a \in \brackets{k}}$ form a partition of $\brackets{n}$. In more detail, the two restrictions are as follows:
+Note that estimating $\graphon$ is equivalent to estimating each pairwise probability $\edgeproba$. Due to the unobserved design, this estimation problem is only made possible by imposing certain structure on the connection probabilities. In this paper they consider two widely used restrictions: the stochastic block model and the assumption that $\graphon$ belongs to a H\"older class $\holder$ with smoothness $\alpha$. To describe the restrictions in detail we need some notation.
+
+ Let $\partitions = \set{z : \brackets{n} \rightarrow \brackets{k}}$ be the collection of all possible $k^n$ partition mappings (order matters in the mapping) of the numbers $1, \dots, n$. In particular, the sets $\set{z^{-1}(a) : a \in \brackets{k}}$ form a partition of $\brackets{n}$, meaning that $\bigcup_{a \in \brackets{k}} z^{-1}(a) = \brackets{n}$ and $z^{-1}(a) \cap z^{-1}(b) = \emptyset$ for any $a \neq b$. Additionally, given a matrix $\set{\eta_{ij}} \in \Reals{n\times n}$, and a partition function $z \in \partitions$, define the block average on the set $z^{-1}(a) \times z^{-1}(b)$ as
+ 
+\begin{equation}
+\begin{aligned}
+\bar{\eta}_{ab} = \frac{1}{\abs{z^{-1}(a)}\abs{z^{-1}(b)}} \sum_{i \in z^{-1}(a)} \sum_{j \in z^{-1}(b)} \eta_{ij} \quad \text{for } a \neq b \in \brackets{k}
+\end{aligned}
+\end{equation}
+
+and when $\abs{z^{-1}(a)} > 1$,
+
+\begin{equation}
+\begin{aligned}
+\bar{\eta}_{aa} = \frac{1}{\abs{z^{-1}(a)}\left( \abs{z^{-1}(a)}-1 \right)} \sum_{i \neq j \in z^{-1}(a)}  \eta_{ij} \quad \text{for } a \in \brackets{k}
+\end{aligned}
+\end{equation}
+
+In more generality, for any $Q = \set{Q}\in \Reals{k\times k}$ and $z \in \partitions$, define the objective function
+
+\[ L(Q,z) = \sum_{a,b\in\brackets{k}} \sum_{(i,j)\in z^{-1}(a) \times z^{-1}(b)} \left( A_{ij} - Q{ab} \right)^2  \]
+
+For any optimizer of the objective function,
+
+\begin{equation}
+\begin{aligned}
+( \hat{Q}, \hat{z} ) \in \argmin_{Q \in \Reals{k \times k}, z \in \partitions}  L(Q,z)
+\end{aligned}
+\end{equation}
+
+the estimator of $\theta_{ij}$ is defined as
+
+\begin{equation}
+\begin{aligned}
+\htheta_{ij} = \hat{Q}_{\hat{z}(i)\hat{z}(j)}, \qquad i > j,
+\end{aligned}
+\end{equation}
+
+and $\htheta_{ij} = \htheta_{ji}$ for $i<j$. For the diagonal element it is set as $\htheta_{ii} = 0$. This can be seen as first clustering the data using an estimated partition function and then estimating the model parameters by using block averages. From the least squares formulation it is easy to observe that $\hat{Q}_{ab} = \bar{A}_{ab}(\hat{z}), \forall a,b \in \brackets{k}$, for any minimizer $( \hat{Q}, \hat{z} )$. In other words, the estimator $\htheta_{ij}$ is essentially a histogram approximation after finding the optimal cluster assignment according to the least square criterion.
+
+In more detail, the two restrictions previously mentioned are as follows:
 
 \begin{assump}\label{assump:sbm}
 \textit{Stochastic Block Model with k clusters or SBM($k$)}
