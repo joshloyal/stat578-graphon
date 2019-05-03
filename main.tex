@@ -389,7 +389,9 @@ However, this is just the minimax lower bound for Liptchiz functions on $(0, 1)$
 %Conclusion
 \section{Conclusion}\label{sec:conclusion}
 
-We learned so much stuff that we are now woke. 
+In this paper the authors manage to obtain optimal rates under the mean square error for both the stochastic block model with $k$ clusters and for nonparametric graphon estimation in a H\"older class. The minimax rate for nonparametric estimation is the same as the optimal rate of convergence in the typical nonparametric scenario, when $\alpha \in (0,1)$, even when the design is unknown. When $\alpha \geq 1$, the cost of not knowing the design is reflected in that the smoothness does not improve the rate any longer. As mentioned in the introduction, this allows for new estimators to compare against optimal rates of convergence. 
+
+The authors discuss some natural extensions of their results. For example, one could allow for asymmetric graphons, which results in a different rate. In addition, one could use another loss function. In particular, the authors consider the operator norm and derive bounds that scale as $n$. Further extensions would be to change the graph structure. For example, one could consider rates for directed graphs. \citep{cai2016digraphon} derive di-graphon functions, which currently do not have a known minimax rate of estimation. Finally, one could consider estimation on graphs with weighted edges. This would be equivalent to estimation with a Poisson likelihood instead of a Bernoulli likelihood.
 
 
 \bibliographystyle{asa}
