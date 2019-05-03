@@ -8,6 +8,7 @@
 \usepackage{array}
 \usepackage{url}
 \usepackage{algorithm}
+\usepackage{blkarray, bigstrut}
 \usepackage[noend]{algpseudocode}
 \usepackage{mathrsfs}
 \usepackage{dsfont}
@@ -50,3 +51,6 @@
 
 \def\bal#1\eal{\begin{align}#1\end{align}}
 \def\balnn#1\ealnn{\begin{align*}#1\end{align*}}
+
+\newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
+\newcolumntype{N}{@{}m{0pt}@{}}

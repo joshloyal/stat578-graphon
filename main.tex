@@ -41,7 +41,7 @@ Gao and Zhu consider estimation of $\graphon$ under a squared error loss. This l
 Note that estimating $\graphon$ is equivalent to estimating each pairwise probability $\edgeproba$. Due to the unobserved design, this estimation problem is only made possible by imposing certain structure on the connection probabilities. In this paper they consider two widely used restrictions: the stochastic block model and the assumption that $\graphon$ belongs to a H\"older class $\holder$ with smoothness $\alpha$. To describe the restrictions in detail we need some notation.
 
  Let $\partitions = \set{z : \brackets{n} \rightarrow \brackets{k}}$ be the collection of all possible $k^n$ partition mappings (order matters in the mapping) of the numbers $1, \dots, n$. In particular, the sets $\set{z^{-1}(a) : a \in \brackets{k}}$ form a partition of $\brackets{n}$, meaning that $\bigcup_{a \in \brackets{k}} z^{-1}(a) = \brackets{n}$ and $z^{-1}(a) \cap z^{-1}(b) = \emptyset$ for any $a \neq b$. Additionally, given a matrix $\set{\eta_{ij}} \in \Reals{n\times n}$, and a partition function $z \in \partitions$, define the block average on the set $z^{-1}(a) \times z^{-1}(b)$ as
- 
+
 \begin{equation}
 \begin{aligned}
 \bar{\eta}_{ab} = \frac{1}{\abs{z^{-1}(a)}\abs{z^{-1}(b)}} \sum_{i \in z^{-1}(a)} \sum_{j \in z^{-1}(b)} \eta_{ij} \quad \text{for } a \neq b \in \brackets{k}
@@ -241,9 +241,49 @@ We can then combine these bounds with Equation \ref{eq:chi2_fano} to conclude th
 \inf_{\hat{\theta}} \sup_{\theta \in T_1} \Dist \left\{\frac{1}{n^2} \sum_{ij} (\hat{\theta}_{ij} - \theta_{ij})^2 \geq \frac{C_1 k^2}{n^2} \right\} \geq 0.9.
 \end{equation}
 
-\textit{Clustering rate:}
+\textit{Clustering rate:} The procedure to lower bound the clustering rate is similar to the non parametric rate except now we need to fix a Q and define an appropriate subset of $\partitions$. Gao and Zhou using the following $Q$:
+\begin{equation}
+Q = \left[
+\begin{array}{cc}
+0 & B \\
+B^T & 0
+\end{array}
+\right]
+\end{equation}
+where $B$ is a $(k/2) \times (k/2)$ matrix. We now use the VG lemma to set the values of $B$ that allow us to control the packing number lower bound and KL diameter upper bound. Let $d = k/2$, so that for $k$ large enough the VG lemma allows us to find $\set{\omega_1, \dots, \omega_{k/2}} \subset \mathcal{H}_{k/2}$ such that $\rho(\omega_a, \omega_b) > k/8$ for $a \neq b \in \brackets{k/2}$. Define $B = (B_1, \dots, B_{k/2})$ by
+\begin{equation}
+B_a = \frac{1}{2} + \sqrt{\frac{c_2 \log k}{n}}\omega_a, \quad \text{ for } a \in \brackets{k/2}.
+\end{equation}
+Note that under this construction (for $a \neq b \in \brackets{k/2}$):
+\begin{equation}
+\norm{B_a - B_b}^2 = \frac{c_2 \log k}{n} \rho_H(\omega_a, \omega_b) \geq \frac{c_2 k \log k}{8 n}.
+\end{equation}
+The key step is then defining the following subset of $\partitions$:
+\begin{equation}
+\begin{aligned}
+\Z = \set{&z \in \partitions : |z^{-1}(a)| = \frac{n}{k} \text{ for } a \in \brackets{k} \\
+          &z^{-1}(a) = \brackets{\frac{(a-1)n}{k} + 1, \dots, \frac{an}{k}} \text{ for } a \in \brackets{k/2}}
+\end{aligned}
+\end{equation}
+Again we are restricting the partitions to equal sizes with $n/k$ nodes in each. However, only the first $n/2$ nodes have known assignments shared between all elements of $\Z$. The remaining node assignments can change between $z, z' \in \Z$. We are now ready to identify the subspace of $\Theta_k$ we will apply Fano's Lemma over. For each $z \in \Z$ define $\theta^{z}$ by $\theta_{ij}^z = Q_{z(i)z(j)}$ for $i \neq j$ and $\theta_{ii}^z = 0$ otherwise. The subpsace we consider is then $T_2 = \set{\theta^{z} : z \in \Z}$. Note that if we define $S = \set{i : i \in z^{-1}(a) \text{ for } a \in \floor{k/2}}$.
+\begin{table}[htbp]
+\begin{center}
+\def\arraystretch{2.5}
+\begin{tabular}{@{}cc|c@{\hspace{0.25cm}}|c@{\hspace{0.25cm}}|@{}}
+\multicolumn{1}{c}{} & \multicolumn{1}{c}{} & \multicolumn{1}{c}{$S$} & \multicolumn{1}{c}{$S^c$}  \\
+\cline{3-4}
+\multirow{2}{*}{$\theta^z = $} & $S$ &  0  & $B_{z(i)z(j)}$ \\\cline{3-4}
+                               & $S^c$ &  $B_{z(i)z(j)}$  & 0 \\\cline{3-4}
+\end{tabular}
+\end{center}
+\end{table}
 
-
+The lower bounding procedure is the same as before: first we upper bound the KL diameter and then we lower bound the packing number. The upper bound for the KL distance is simple (in a homework assignment we derived this upper bound for the KL of independent Bernoullis):
+\begin{equation}
+\text{KL}(\Dist_{\theta} || \Dist_{\theta'}) \leq 8 \sum_{ij} (\theta_{ij} - \theta_{ij}')^2 \\
+\leq 8 n^2 c_2 \frac{\log k}{n} = 8 c_2 n \log k.
+\end{equation}
+since the maximum difference between two entries of $B$ is $\sqrt{n^{-1}c_2 \log k}$.
 \subsection{Upper Bound H\"older Class} \label{sec:upper_hold}
 
 Let us redefine the $z^\ast$ and $Q^\ast$ used in the proof of the upper bound for the SBM. Choose $z^\ast$ that satisfies 
