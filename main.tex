@@ -33,52 +33,14 @@ A_{ij} &= A_{ji} \sim \Bern(\theta_{ij}).
 where $\GraphonDist$ is a distribution supported on $[0, 1]^n$. Often, $\GraphonDist$ is assumed to be a uniform distribution on the unit interval; however, the results in the paper do not rely on this restriction. A key assumption of this model is that entries of the adjacency matrix $\set{A_{ij}}$ are independent given a collection of unobserved pairs of random variables $\latentvars$. Furthermore, the latent variables are linked to the probability that nodes $i$ and $j$ form an edge through a symmetric function $\graphon$ known as a graphon. This graphon function is the primary object of interest under the model in \ref{eq:graph_model}. Knowledge of this object allows one to compare two different networks or to make predictions about future links in the network.
 For this reason, the goal of the estimation problem is to estimate $\graphon$ given the observed adjacency matrix, but with an unobserved design due to the presence of the latent variables $\latentvars$.
 
-Gao and Zhu consider estimation of $\graphon$ under a squared error loss. This loss function leads to the following empirical risk minimization criteria:
+Gao and Zhu consider estimation of $\graphon$ under a squared error loss. This loss function leads to the following evaluation criteria:
 \begin{equation}\label{eq:loss_func}
 \frac{1}{n^2}\sum_{i, j \in \brackets{n}}(\hat{f}(\xi_i, \xi_j) - f(\xi_i, \xi_j))^2 =
 \frac{1}{n^2}\sum_{i, j \in \brackets{n}}(\hat{\theta}_{ij} - \theta_{ij})^2
 \end{equation}
-Note that estimating $\graphon$ is equivalent to estimating each pairwise probability $\edgeproba$. Due to the unobserved design, this estimation problem is only made possible by imposing certain structure on the connection probabilities. In this paper they consider two widely used restrictions: the stochastic block model and the assumption that $\graphon$ belongs to a H\"older class $\holder$ with smoothness $\alpha$. To describe the restrictions in detail we need some notation.
+Note that estimating $\graphon$ is equivalent to estimating each pairwise probability $\edgeproba$. Due to the unobserved design, this estimation problem is only made possible by imposing certain structure on the connection probabilities. This paper considers two widely used restrictions: the stochastic block model and the assumption that $\graphon$ belongs to a H\"older class $\holder$ with smoothness parameter $\alpha$.
 
- Let $\partitions = \set{z : \brackets{n} \rightarrow \brackets{k}}$ be the collection of all possible $k^n$ partition mappings (order matters in the mapping) of the numbers $1, \dots, n$. In particular, the sets $\set{z^{-1}(a) : a \in \brackets{k}}$ form a partition of $\brackets{n}$, meaning that $\bigcup_{a \in \brackets{k}} z^{-1}(a) = \brackets{n}$ and $z^{-1}(a) \cap z^{-1}(b) = \emptyset$ for any $a \neq b$. Additionally, given a matrix $\set{\eta_{ij}} \in \Reals{n\times n}$, and a partition function $z \in \partitions$, define the block average on the set $z^{-1}(a) \times z^{-1}(b)$ as
-
-\begin{equation}
-\begin{aligned}
-\bar{\eta}_{ab} = \frac{1}{\abs{z^{-1}(a)}\abs{z^{-1}(b)}} \sum_{i \in z^{-1}(a)} \sum_{j \in z^{-1}(b)} \eta_{ij} \quad \text{for } a \neq b \in \brackets{k}
-\end{aligned}
-\end{equation}
-
-and when $\abs{z^{-1}(a)} > 1$,
-
-\begin{equation}
-\begin{aligned}
-\bar{\eta}_{aa} = \frac{1}{\abs{z^{-1}(a)}\left( \abs{z^{-1}(a)}-1 \right)} \sum_{i \neq j \in z^{-1}(a)}  \eta_{ij} \quad \text{for } a \in \brackets{k}
-\end{aligned}
-\end{equation}
-
-In more generality, for any $Q = \set{Q}\in \Reals{k\times k}$ and $z \in \partitions$, define the objective function
-
-\[ L(Q,z) = \sum_{a,b\in\brackets{k}} \sum_{(i,j)\in z^{-1}(a) \times z^{-1}(b)} \left( A_{ij} - Q{ab} \right)^2  \]
-
-For any optimizer of the objective function,
-
-\begin{equation}
-\begin{aligned}
-( \hat{Q}, \hat{z} ) \in \argmin_{Q \in \Reals{k \times k}, z \in \partitions}  L(Q,z)
-\end{aligned}
-\end{equation}
-
-the estimator of $\theta_{ij}$ is defined as
-
-\begin{equation}
-\begin{aligned}
-\htheta_{ij} = \hat{Q}_{\hat{z}(i)\hat{z}(j)}, \qquad i > j,
-\end{aligned}
-\end{equation}
-
-and $\htheta_{ij} = \htheta_{ji}$ for $i<j$. For the diagonal element it is set as $\htheta_{ii} = 0$. This can be seen as first clustering the data using an estimated partition function and then estimating the model parameters by using block averages. From the least squares formulation it is easy to observe that $\hat{Q}_{ab} = \bar{A}_{ab}(\hat{z}), \forall a,b \in \brackets{k}$, for any minimizer $( \hat{Q}, \hat{z} )$. In other words, the estimator $\htheta_{ij}$ is essentially a histogram approximation after finding the optimal cluster assignment according to the least square criterion.
-
-In more detail, the two restrictions previously mentioned are as follows:
+To describe the restrictions in detail we need some notation. Let $\partitions = \set{z : \brackets{n} \rightarrow \brackets{k}}$ be the collection of all possible $k^n$ partition mappings (order matters in the mapping) of the numbers $1, \dots, n$. In particular, the sets $\set{z^{-1}(a) : a \in \brackets{k}}$ form a partition of $\brackets{n}$, meaning that $\bigcup_{a \in \brackets{k}} z^{-1}(a) = \brackets{n}$ and $z^{-1}(a) \cap z^{-1}(b) = \emptyset$ for any $a \neq b$. With this notation, the two restrictions mentioned previously are as follows:
 
 \begin{assump}\label{assump:sbm}
 \textit{Stochastic Block Model with k clusters or SBM($k$)}
@@ -116,16 +78,17 @@ We then restrict $\graphon$ to the following H\"older class:
 \end{equation}
 \end{assump}
 
-Before stating the key results of the paper, it is worth pointing out the behavior of $\holder$ functions when $\alpha \in (0, 1]$. It is easy to see that this regime of smoothness parameter implies the Liptchitz condition
-\begin{equation}
-\abs{f(x,y) - f(x', y')} \leq M (\abs{x - x'} + \abs{y - y'})^{\alpha}.
-\end{equation}
-Such a nice interpretation is important because we will later see that this regime of smoothness parameter results in a minimax rate that mimics the well known minimax rate for nonparametric regression with a fixed design.
+%Before stating the key results of the paper, it is worth pointing out the behavior of $\holder$ functions when $\alpha \in (0, 1]$. It is easy to see that this regime of smoothness parameter implies the Liptchitz condition
+%\begin{equation}
+%\abs{f(x,y) - f(x', y')} \leq M (\abs{x - x'} + \abs{y - y'})^{\alpha}.
+%\end{equation}
+%Such a nice interpretation is important because we will later see that this regime of smoothness parameter results in a minimax rate that mimics the well known minimax rate for nonparametric regression with a fixed design.
+
 
 %Key Results
 \section{Key Results} \label{sec:key_results}
 
-The main contributions of the paper are deriving the minimax rates of estimation for Assumption \ref{assump:sbm} and Assumption \ref{assump:holder}. This is done by deriving the lower and upper bounds. The results are summarized in the following two theorems:
+The main contributions of the paper are deriving the minimax rates of estimation for Assumption \ref{assump:sbm} and Assumption \ref{assump:holder}. This is done by deriving matching lower and upper bounds for the expected loss. The results are summarized in the following two theorems:
 
 \begin{theorem} \label{thm:sbm}
 Under the SBM($k$), we have
@@ -147,58 +110,91 @@ n^{-2\alpha/(\alpha + 1)}, \quad 0 \leq \alpha \leq 1 \\
 where the expectation is jointly over $\Adj$ and $\set{\xi_i}$.
 \end{theorem}
 
-Before moving onto the proofs, it is worth discussing an important decomposition of the rates in Theorem \ref{thm:sbm} and \ref{thm:nonparam} pointed out by Gao and Zhu. They breakdown the rates into the \textit{clustering rate} and \textit{nonparametric rate}. Intuitively these rates come about due to the two types of quantities one has to estimate in the graphon problem. At a high level the clustering rate comes about due to the unknown design of the latent variables $\xi_i$. In the SBM($k$) this is equivalent to the estimation of the group assignments of the nodes. This is the origin of the $n^{-1} \log k$ term in Theorem \ref{thm:sbm} and the $n^{-1} \log n$ term in Theorem \ref{thm:nonparam}. On the other hand the nonparametric rate is due to the estimation of the nonparametric graphon function $\graphon$. In the SBM($k$) this is equivalent to estimating the cluster probability matrix $\set{Q_{ab}} \in [0, 1]^{k \times k}$. This results in the $k^2 /n^2$ and the $n^{-2\alpha/(\alpha + 1)}$ terms in the theorems. The difficulty of the problem is then due to the difficulty of these two subproblems. Characterizing the difficulty of these subproblems is essentially the crux of proving the lower bounds in these theorems.
+\noindent
+\textit{Methodology:} Before moving onto the proofs, it is worth outlining the big picture of the strategy. To find an upper bound for the expectation in Theorem \ref{thm:sbm}, Gao and Zhu propose a natural least squares estimator for $\theta_{ij}$. From experience it makes sense that such an estimator would achieve the optimal rate. In more detail, given a matrix $\set{\eta_{ij}} \in \Reals{n\times n}$, and a partition function $z \in \partitions$, define the block average on the set $z^{-1}(a) \times z^{-1}(b)$ as
+\begin{equation}
+\begin{aligned}
+\bar{\eta}_{ab} = \frac{1}{\abs{z^{-1}(a)}\abs{z^{-1}(b)}} \sum_{i \in z^{-1}(a)} \sum_{j \in z^{-1}(b)} \eta_{ij} \quad \text{for } a \neq b \in \brackets{k}
+\end{aligned}
+\end{equation}
+and when $\abs{z^{-1}(a)} > 1$,
+\begin{equation}
+\begin{aligned}
+\bar{\eta}_{aa} = \frac{1}{\abs{z^{-1}(a)}\left( \abs{z^{-1}(a)}-1 \right)} \sum_{i \neq j \in z^{-1}(a)}  \eta_{ij} \quad \text{for } a \in \brackets{k}.
+\end{aligned}
+\end{equation}
+The least squares estimator is the minimizer of the following objective function for any $Q = \set{Q}\in \Reals{k\times k}$ and $z \in \partitions$:
+
+\[ L(Q,z) = \sum_{a,b\in\brackets{k}} \sum_{(i,j)\in z^{-1}(a) \times z^{-1}(b)} \left( A_{ij} - Q_{ab} \right)^2  \]
+In particular, the least squares estimators for the block probability matrix and cluster assignments are defined as
+\begin{equation}
+\begin{aligned}
+( \hat{Q}, \hat{z} ) \in \argmin_{Q \in \Reals{k \times k}, z \in \partitions}  L(Q,z)
+\end{aligned}
+\end{equation}
+the natural estimator of $\theta_{ij}$ is then defined as
+
+\begin{equation}
+\begin{aligned}
+\htheta_{ij} = \hat{Q}_{\hat{z}(i)\hat{z}(j)}, \qquad i > j,
+\end{aligned}
+\end{equation}
+and $\htheta_{ij} = \htheta_{ji}$ for $i<j$. For the diagonal element it is set as $\htheta_{ii} = 0$. This can be seen as first clustering the data using an estimated partition function and then estimating the model parameters by using block averages. From the least squares formulation it is easy to observe that $\hat{Q}_{ab} = \bar{A}_{ab}(\hat{z}), \forall a,b \in \brackets{k}$, for any minimizer $( \hat{Q}, \hat{z} )$. In other words, the estimator $\htheta_{ij}$ is essentially a histogram approximation after finding the optimal cluster assignment according to the least square criterion.
+
+The proofs of the lower bounds are essentially a standard application of Fano's Lemma. The key incite of Gao and Zhu is a novel decomposition of the rates into a \textit{clustering rate} and \textit{nonparametric rate}. Intuitively these rates come about due to the two types of quantities one has to estimate in the graphon problem. At a high level the clustering rate comes about due to the unknown design of the latent variables $\xi_i$. In the SBM($k$) this is equivalent to the estimation of the group assignments of the nodes. This is the origin of the $n^{-1} \log k$ term in Theorem \ref{thm:sbm} and the $n^{-1} \log n$ term in Theorem \ref{thm:nonparam}. On the other hand the nonparametric rate is due to the estimation of the nonparametric graphon function $\graphon$. In the SBM($k$) this is equivalent to estimating the cluster probability matrix $\set{Q_{ab}} \in [0, 1]^{k \times k}$. This results in the $k^2 /n^2$ and the $n^{-2\alpha/(\alpha + 1)}$ terms in the theorems. The difficulty of the problem is then due to the difficulty of these two subproblems. Characterizing the difficulty of these subproblems is essentially the crux of proving the lower bounds in for the expectations in Theorems \ref{thm:sbm} and \ref{thm:nonparam}.
+
+Up until now we have almost exclusively discussed the strategies for the SBM($k$) and not mentioned what is done for $f \in \holder$. This is due to a clever trick by Gao and Zhu to approximate any $f \in \holder$ by what is essentially an SBM($k$) where $k = n^{\delta}$ for some $\delta \in (0, 1)$. This allows the proofs of the nonparametric case to follow with much less work from the SBM($k$) case.
 
 %Proofs
 \section{Proof Outlines}\label{sec:proofs}
 
 \subsection{Upper Bound SBM($k$)} \label{sec:upper_sbm}
 
-Before stating the proof it would be useful to indicate some more notation. Let us indicate the true value on each block by $\set{Q^\ast_{ab}} \in \brackets{0,1}^{k \times k}$ and the oracle assignment by $z^\ast \in \partitions$ such that $\theta_{ij} = Q^\ast_{z^\ast(i)z^\ast(j)}$ for any $i\neq j$. Also, for the estimated partition function $\hat{z}$, define $\set{\tilde{Q}_{ab}} \in \brackets{0,1}^{k \times k}$  by $\tilde{Q}_{ab} = \bar{\theta}_{ab}(\hat{z})$, and also define $\ttheta_{ij}=\tilde{Q}_{\hat{z}(i)\hat{z}(j)}$ for any $i \neq j$ and as zero for the diagonal elements.
+Before stating the proof it is useful to layout some notation. We indicate the true value on each block by $\set{Q^\ast_{ab}} \in \brackets{0,1}^{k \times k}$ and the oracle assignment by $z^\ast \in \partitions$ such that $\theta_{ij} = Q^\ast_{z^\ast(i)z^\ast(j)}$ for any $i\neq j$. Also, for the estimated partition function $\hat{z}$, define $\set{\tilde{Q}_{ab}} \in \brackets{0,1}^{k \times k}$  by $\tilde{Q}_{ab} = \bar{\theta}_{ab}(\hat{z})$, and also define $\ttheta_{ij}=\tilde{Q}_{\hat{z}(i)\hat{z}(j)}$ for any $i \neq j$ and as zero for the diagonal elements.
 
-By definition, we have $L(\hat{Q},\hat{z}) \leq L(Q^\ast, z^\ast)$ which can be rewritten as
-\[ \norm{\htheta - A}^2 \leq \norm{\theta - A}^2 \]
-
+From the basic inequality, we have $L(\hat{Q},\hat{z}) \leq L(Q^\ast, z^\ast)$ which can be rewritten as
+\[
+\norm{\htheta - A}^2 \leq \norm{\theta - A}^2
+\]
 We can decompose $\norm{\htheta - A}^2$ as $\norm{\htheta - \theta}^2 + 2\dprod{\htheta - \theta, \theta - A} + \norm{\theta - A}$ and combining all this we get
 
-\[  \norm{\htheta - \theta}^2 \leq 2\dprod{\htheta - \theta, \theta - A}  \]
-
+\[
+\norm{\htheta - \theta}^2 \leq 2\dprod{\htheta - \theta, \theta - A}
+\]
 The right-hand side of the previous inequality can further be bounded as
 
 \begin{align*}
     \dprod{\htheta - \theta, \theta - A} & \leq \norm{\htheta - \ttheta}\abs*{\dprod*{\frac{\htheta-\ttheta}{\norm{\htheta - \ttheta}}, A - \theta  }} \\
   & \quad + (\norm{\ttheta - \htheta} + \norm{\htheta - \theta})\abs*{\dprod*{\frac{\ttheta-\theta}{\norm{\ttheta-\theta}},A-\theta}}
 \end{align*}
+The authors then make use of three Lemmas that give upper bounds for $\norm{\htheta-\ttheta}$, $\abs*{\dprod*{\frac{\ttheta-\ttheta}{\norm{\ttheta-\ttheta}},A-\theta}}$ and $\abs*{\dprod*{\frac{\ttheta-\theta}{\norm{\ttheta-\theta}},A-\theta}}$. All these terms can be bounded by $C\sqrt{k^2 +n\log k}$ with probability at least $1-3\exp(-C^\prime n\log k)$. Combining the bounds, we have
 
-The authors then make use of three Lemmas that give upper bounds for $\norm{\htheta-\ttheta}$, $\abs*{\dprod*{\frac{\ttheta-\ttheta}{\norm{\ttheta-\ttheta}},A-\theta}}$ and $\abs*{\dprod*{\frac{\ttheta-\theta}{\norm{\ttheta-\theta}},A-\theta}}$. All these terms can be bounded by $C\sqrt{k^2 +n\log k}$ with probability at least $1-3\exp(-C^\prime n\log k)$.
-
-Combining the bounds, we have
-
-\[ \norm{\htheta-\theta}^2 \leq 2C\norm{\htheta - \theta}\sqrt{k^2 +n \log k} + 4C^2(k^2 +n\log k),  \]
-
+\[
+\norm{\htheta-\theta}^2 \leq 2C\norm{\htheta - \theta}\sqrt{k^2 +n \log k} + 4C^2(k^2 +n\log k),
+\]
 with probability at least $1-3\exp(-C^\prime n\log k)$. Solving this equation, we get
 
 \[ \norm{\htheta-\theta}^2 \leq C_1 (k^2 + n\log k ) \]
+with at least the same probability as stated above. This concludes the high probability bound.
 
-with at least the same probability as stated above. This concludes the high probability bound. For the bound in expectation, we can make use of the following inequality:
+For the bound in expectation, we can make use of the following inequality:
 
 \begin{align*}
     \mathbb{E}n^{-2}\norm{\htheta-\theta}^2 & \leq \mathbb{E}(n^{-2}\norm{\htheta-\theta}^2 \mathbb{I}\set{n^{-2}\norm{\htheta-\theta}^2 \leq \varepsilon^2} ) \\
     & \quad + \mathbb{E}(n^{-2}\norm{\htheta-\theta}^2 \mathbb{I}\set{n^{-2}\norm{\htheta-\theta}^2 > \varepsilon^2} ) \\
     & \leq \varepsilon^2 + \mathbb{P}(n^{-2}\norm{\htheta-\theta}^2 > \varepsilon^2) \leq \varepsilon^2 + 3\exp(-C^\prime n\log k),
 \end{align*}
-
 where $\varepsilon^2 = C_1(\frac{k^2}{n^2}+ \frac{\log k}{n})$. Since $\varepsilon^2$ is the dominating term, this completes the proof.
 
 \subsection{Lower Bound SBM($k$)} \label{sec:lower_sbm}
-Note that the lower bound of the expectation in Theorem \ref{thm:sbm} is equivalent to a lower bound of the following probability (Markov Inequality):
+Note that the lower bound of the expectation in Theorem \ref{thm:sbm} is equivalent to a lower bound of the following probability (Markov's inequality):
 \begin{equation}
 \begin{aligned}
 &\inf_{\hat{\theta}} \sup_{\theta \in \Theta_k} \Dist \left\{ \frac{1}{n^2}\sum_{i,j \in \brackets{n}} (\hat{\theta}_{ij} - \theta_{ij})^2 \geq \epsilon^2\right\}  \\
 &= \inf_{\hat{\theta}} \sup_{Q = Q^T \in [0, 1]^{k \times k}} \sup_{z \in \partitions} \Dist \left\{ \frac{1}{n^2}\sum_{i,j \in \brackets{n}} (\hat{\theta}_{ij} - Q_{z(i), z(j)})^2 \geq \epsilon^2\right\}
 \end{aligned}
 \end{equation}
-for any $\epsilon > 0$. We can now see how the clustering and nonparametric rate come into the bound. We have a supremum over both the group probabilities $Q$ and the cluster assignments $z$. Just as in class, the proof of the in-probability lower bound is an application of Fano's Lemma. To apply Fano's Lemma we restrict the supremum of $\Theta_k$ to a subset $T \subset \Theta_k$ with a finite packing number $\mathcal{M}(2 \epsilon, T, \rho)$. In this case we can restrict $\Theta_k$ in two different ways. The first way fixes $z \in \partitions$ and then finds an appropriate packing as $Q$ varies. This leads to the nonparametric rate. The second way fixes $Q$ and finds an appropriate packing as $z$ varies. This leads to the clustering rate. As a result we will have two lower bounds, which we can then combine using what is essentially a union bound argument. We start with the nonparametric rate.
+for any $\epsilon > 0$. We can now see how the clustering and nonparametric rate come into the bound. We have a supremum over both the group probabilities $Q$ and the cluster assignments $z$. Just as in class, the proof of the in-probability lower bound is an application of Fano's Lemma. To apply Fano's Lemma we restrict the supremum of $\Theta_k$ to a subset $T \subset \Theta_k$ with a finite packing number $\mathcal{M}(\epsilon, T, \rho)$. In this case we can restrict $\Theta_k$ in two different ways. The first way fixes $z \in \partitions$ and then finds an appropriate packing as $Q$ varies. This leads to the nonparametric rate. The second way fixes $Q$ and finds an appropriate packing as $z$ varies. This leads to the clustering rate. As a result we will have two lower bounds, which we can then combine using what is essentially a union bound argument. We start with the nonparametric rate.
 
 \textit{Nonparametric rate:} The nonparametric rate actually utilizes a version of Fano's Lemma in terms of the $\chi^2$ distance instead of the Kullback-Leibler distance. The statement is as follows:
 \begin{equation}\label{eq:chi2_fano}
@@ -321,14 +317,15 @@ Combining these two bounds we have a bound on the packing number: $\log \mathcal
 
 Let us redefine the $z^\ast$ and $Q^\ast$ used in the proof of the upper bound for the SBM. Choose $z^\ast$ that satisfies
 
-\[ \frac{1}{n^2} \sum_{a,b\in \brackets{k}} \sum_{i\neq j: z^\ast(i)=a, z^\ast(j)=b} (\theta_{ij} -\bar{\theta}_{ab}(z^\ast)  )^2 \neq CM^2 \left( \frac{1}{k^2} \right)^{\alpha \wedge 1}  \],
-
+\[
+\frac{1}{n^2} \sum_{a,b\in \brackets{k}} \sum_{i\neq j: z^\ast(i)=a, z^\ast(j)=b} (\theta_{ij} -\bar{\theta}_{ab}(z^\ast)  )^2 \neq CM^2 \left( \frac{1}{k^2} \right)^{\alpha \wedge 1},
+\]
 for some universal constant $C >0$. The authors present the existence of such a $z^\ast$ under the H\"older class $\holder$ via a Lemma. Choosing the partition function in this manner implies a good approximation of $\set{\theta_{ij}}$ by the stochastic block model. With this $z^\ast$, define $Q^\ast_{ab} = \bar{\theta}_{ab}(z^\ast)$ for any $a,b \in \brackets{k}$. Lastly, define $\theta^\ast_{ij} = Q^\ast_{z^\ast(i)z^\ast(j)}$ for all $i \neq j$, with diagonal elements set to zero.
 
 Similar to the upper bounds for the stochastic block model, we will use a result that states that for any constant $C^\prime > 0$, there exists a constant $C>0$ only depending on $C^\prime$, such that
 
-\[  \abs{\dprod{\frac{\ttheta - \atheta}{\norm{\ttheta-\atheta}}, A-\theta}} \leq C\sqrt{n\log k},  \]
-
+\[  \abs{\dprod{\frac{\ttheta - \atheta}{\norm{\ttheta-\atheta}}, A-\theta}} \leq C\sqrt{n\log k},
+\]
 with probability at least $1-\exp(-C^\prime n \log k)$. With this stated we can properly begin the proof.
 
 Similarly to the SBM upper bound proof, we can state
@@ -338,38 +335,35 @@ Similarly to the SBM upper bound proof, we can state
     & \leq 2\norm{\htheta - \ttheta}\abs{\dprod{\frac{\htheta-\ttheta}{\norm{\htheta-\ttheta}},A-\theta}} + 2(\norm{\ttheta-\htheta} + \norm{\htheta-\atheta})\abs{\dprod{\frac{\ttheta-\atheta}{\norm{\ttheta-\atheta}},A-\theta}} \\
     & \quad + 2\norm{\htheta-\atheta}\norm{\theta-\atheta}.
 \end{align*}
-
 For simplicity sake, we will introduce the same notation that the authors use in their paper:
 
 \[ L = \norm{\htheta-\atheta}, \qquad R = \norm{\ttheta-\htheta}, \qquad B = \norm{\theta - \atheta},  \]
 
 \[ E = \abs{\dprod{\frac{\htheta-\ttheta}{\norm{\htheta-\ttheta}},A-\theta}}, \qquad F = \abs{\dprod{\frac{\ttheta-\atheta}{\norm{\ttheta-\atheta}},A-\theta}}.  \]
-
 We can rearrange our past inequality to be
-
-\[ L^2 \leq 2(F+B)L + 2(E+F)R   \]
-
+\[
+L^2 \leq 2(F+B)L + 2(E+F)R
+\]
 Solving this quadratic inequality of $L$, we get
 
-\[ L^2 \leq \max\set{16(F+B)^2, 4R(E+F)}  \]
-
+\[
+L^2 \leq \max\set{16(F+B)^2, 4R(E+F)}
+\]
 By using the upper bounds mentioned in this section and section 4.1, for any constant $c^\prime >0$, there exists constants $C$ only depending on $C^\prime$, $M$, such that
 
 \[ B^2 \leq Cn^2 \left(\frac{1}{k^2}\right)^{\alpha \wedge 1}, \qquad F^2 \leq Cn\log k   \]
 
 \[ R^2 \leq C(k^2 + n\log k), \qquad E^2 \leq C(k^2 + n\log k),   \]
-
 with probability at least $1-\exp(-C^\prime n \log k)$. Using these bounds we get
 
-\[ L^2 \leq C_1 \left( n^2 \left( \frac{1}{k^2} \right)^{\alpha \wedge 1} + k^2 + n\log k  \right)  \],
-
+\[ L^2 \leq C_1 \left( n^2 \left( \frac{1}{k^2} \right)^{\alpha \wedge 1} + k^2 + n\log k  \right),
+\]
 with probability at least $1-\exp(-C^\prime n \log k)$ for some constant $C_1$. We can then use all the previous results to conclude that, for some constant $C_2$,
 
 \begin{align*}
     \frac{1}{n^2} \sum_{ij}(\htheta_{ij}-\theta_{ij})^2 & \leq \frac{2}{n^2}(L^2 + B^2) \\
     & \leq C_2 \left( \left( \frac{1}{k^2} \right)^{\alpha \wedge 1} + \frac{k^2}{n^2} + \frac{\log k}{n} \right),
 \end{align*}
-
 with probability at least $1-\exp(-C^\prime n \log k)$.
 
 Finally, when $\alpha \geq 1$, choose $k = \ceil{\sqrt{n}} $ to get the bound $C_3n^{-1}\log n$ for some $C_3$ that only depends on $C^\prime$ and $M$. When $\alpha < 1$, choose $k = \ceil{n^{1/(\alpha+1)}}$ so that the bound becomes $C_4n^{-2\alpha/(\alpha+1)}$ for some constant $C_4$ only depending on $C^\prime$ and $M$.
@@ -389,7 +383,7 @@ However, this is just the minimax lower bound for Liptchiz functions on $(0, 1)$
 %Conclusion
 \section{Conclusion}\label{sec:conclusion}
 
-In this paper the authors manage to obtain optimal rates under the mean square error for both the stochastic block model with $k$ clusters and for nonparametric graphon estimation in a H\"older class. The minimax rate for nonparametric estimation is the same as the optimal rate of convergence in the typical nonparametric scenario, when $\alpha \in (0,1)$, even when the design is unknown. When $\alpha \geq 1$, the cost of not knowing the design is reflected in that the smoothness does not improve the rate any longer. As mentioned in the introduction, this allows for new estimators to compare against optimal rates of convergence. 
+In this paper the authors manage to obtain optimal rates under the mean square error for both the stochastic block model with $k$ clusters and for nonparametric graphon estimation in a H\"older class. The minimax rate for nonparametric estimation is the same as the optimal rate of convergence in the typical nonparametric scenario, when $\alpha \in (0,1)$, even when the design is unknown. When $\alpha \geq 1$, the cost of not knowing the design is reflected in that the smoothness does not improve the rate any longer. As mentioned in the introduction, this allows for new estimators to compare against optimal rates of convergence.
 
 The authors discuss some natural extensions of their results. For example, one could allow for asymmetric graphons, which results in a different rate. In addition, one could use another loss function. In particular, the authors consider the operator norm and derive bounds that scale as $n$. Further extensions would be to change the graph structure. For example, one could consider rates for directed graphs. \citep{cai2016digraphon} derive di-graphon functions, which currently do not have a known minimax rate of estimation. Finally, one could consider estimation on graphs with weighted edges. This would be equivalent to estimation with a Poisson likelihood instead of a Bernoulli likelihood.
 
