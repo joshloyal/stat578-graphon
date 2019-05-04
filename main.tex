@@ -318,13 +318,13 @@ Combining these two bounds we have a bound on the packing number: $\log \mathcal
 Let us redefine the $z^\ast$ and $Q^\ast$ used in the proof of the upper bound for the SBM. Choose $z^\ast$ that satisfies
 
 \[
-\frac{1}{n^2} \sum_{a,b\in \brackets{k}} \sum_{i\neq j: z^\ast(i)=a, z^\ast(j)=b} (\theta_{ij} -\bar{\theta}_{ab}(z^\ast)  )^2 \neq CM^2 \left( \frac{1}{k^2} \right)^{\alpha \wedge 1},
+\frac{1}{n^2} \sum_{a,b\in \brackets{k}} \sum_{i\neq j: z^\ast(i)=a, z^\ast(j)=b} (\theta_{ij} -\bar{\theta}_{ab}(z^\ast)  )^2 \leq CM^2 \left( \frac{1}{k^2} \right)^{\alpha \wedge 1},
 \]
 for some universal constant $C >0$. The authors present the existence of such a $z^\ast$ under the H\"older class $\holder$ via a Lemma. Choosing the partition function in this manner implies a good approximation of $\set{\theta_{ij}}$ by the stochastic block model. With this $z^\ast$, define $Q^\ast_{ab} = \bar{\theta}_{ab}(z^\ast)$ for any $a,b \in \brackets{k}$. Lastly, define $\theta^\ast_{ij} = Q^\ast_{z^\ast(i)z^\ast(j)}$ for all $i \neq j$, with diagonal elements set to zero.
 
 Similar to the upper bounds for the stochastic block model, we will use a result that states that for any constant $C^\prime > 0$, there exists a constant $C>0$ only depending on $C^\prime$, such that
 
-\[  \abs{\dprod{\frac{\ttheta - \atheta}{\norm{\ttheta-\atheta}}, A-\theta}} \leq C\sqrt{n\log k},
+\[  \abs*{\dprod*{\frac{\ttheta - \atheta}{\norm{\ttheta-\atheta}}, A-\theta}} \leq C\sqrt{n\log k},
 \]
 with probability at least $1-\exp(-C^\prime n \log k)$. With this stated we can properly begin the proof.
 
@@ -332,14 +332,14 @@ Similarly to the SBM upper bound proof, we can state
 
 \begin{align*}
     \norm{\htheta - \atheta}^2 & \leq 2\dprod{\htheta - \atheta, A - \atheta} \\
-    & \leq 2\norm{\htheta - \ttheta}\abs{\dprod{\frac{\htheta-\ttheta}{\norm{\htheta-\ttheta}},A-\theta}} + 2(\norm{\ttheta-\htheta} + \norm{\htheta-\atheta})\abs{\dprod{\frac{\ttheta-\atheta}{\norm{\ttheta-\atheta}},A-\theta}} \\
+    & \leq 2\norm{\htheta - \ttheta}\abs*{\dprod*{\frac{\htheta-\ttheta}{\norm{\htheta-\ttheta}},A-\theta}} + 2(\norm{\ttheta-\htheta} + \norm{\htheta-\atheta})\abs*{\dprod*{\frac{\ttheta-\atheta}{\norm{\ttheta-\atheta}},A-\theta}} \\
     & \quad + 2\norm{\htheta-\atheta}\norm{\theta-\atheta}.
 \end{align*}
 For simplicity sake, we will introduce the same notation that the authors use in their paper:
 
 \[ L = \norm{\htheta-\atheta}, \qquad R = \norm{\ttheta-\htheta}, \qquad B = \norm{\theta - \atheta},  \]
 
-\[ E = \abs{\dprod{\frac{\htheta-\ttheta}{\norm{\htheta-\ttheta}},A-\theta}}, \qquad F = \abs{\dprod{\frac{\ttheta-\atheta}{\norm{\ttheta-\atheta}},A-\theta}}.  \]
+\[ E = \ab*s{\dprod*{\frac{\htheta-\ttheta}{\norm{\htheta-\ttheta}},A-\theta}}, \qquad F = \abs*{\dprod*{\frac{\ttheta-\atheta}{\norm{\ttheta-\atheta}},A-\theta}}.  \]
 We can rearrange our past inequality to be
 \[
 L^2 \leq 2(F+B)L + 2(E+F)R
