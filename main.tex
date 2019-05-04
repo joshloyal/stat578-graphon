@@ -141,7 +141,7 @@ the natural estimator of $\theta_{ij}$ is then defined as
 \end{equation}
 and $\htheta_{ij} = \htheta_{ji}$ for $i<j$. For the diagonal element it is set as $\htheta_{ii} = 0$. This can be seen as first clustering the data using an estimated partition function and then estimating the model parameters by using block averages. From the least squares formulation it is easy to observe that $\hat{Q}_{ab} = \bar{A}_{ab}(\hat{z}), \forall a,b \in \brackets{k}$, for any minimizer $( \hat{Q}, \hat{z} )$. In other words, the estimator $\htheta_{ij}$ is essentially a histogram approximation after finding the optimal cluster assignment according to the least square criterion.
 
-The proofs of the lower bounds are essentially a standard application of Fano's Lemma. The key incite of Gao and Zhu is a novel decomposition of the rates into a \textit{clustering rate} and \textit{nonparametric rate}. Intuitively these rates come about due to the two types of quantities one has to estimate in the graphon problem. At a high level the clustering rate comes about due to the unknown design of the latent variables $\xi_i$. In the SBM($k$) this is equivalent to the estimation of the group assignments of the nodes. This is the origin of the $n^{-1} \log k$ term in Theorem \ref{thm:sbm} and the $n^{-1} \log n$ term in Theorem \ref{thm:nonparam}. On the other hand the nonparametric rate is due to the estimation of the nonparametric graphon function $\graphon$. In the SBM($k$) this is equivalent to estimating the cluster probability matrix $\set{Q_{ab}} \in [0, 1]^{k \times k}$. This results in the $k^2 /n^2$ and the $n^{-2\alpha/(\alpha + 1)}$ terms in the theorems. The difficulty of the problem is then due to the difficulty of these two subproblems. Characterizing the difficulty of these subproblems is essentially the crux of proving the lower bounds in for the expectations in Theorems \ref{thm:sbm} and \ref{thm:nonparam}.
+The proofs of the lower bounds are essentially a standard application of Fano's Lemma. The key incite of Gao and Zhu is a novel decomposition of the rates into a \textit{clustering rate} and \textit{nonparametric rate}. Intuitively these rates come about due to the two types of quantities one has to estimate in the graphon problem. At a high level the clustering rate comes about due to the unknown design of the latent variables $\xi_i$. In the SBM($k$) this is equivalent to the estimation of the group assignments of the nodes. This is the origin of the $n^{-1} \log k$ term in Theorem \ref{thm:sbm} and the $n^{-1} \log n$ term in Theorem \ref{thm:nonparam}. On the other hand the nonparametric rate is due to the estimation of the nonparametric graphon function $\graphon$. In the SBM($k$) this is equivalent to estimating the cluster probability matrix $\set{Q_{ab}} \in [0, 1]^{k \times k}$. This results in the $k^2 /n^2$ and the $n^{-2\alpha/(\alpha + 1)}$ terms in the theorems. The difficulty of the problem is then due to the difficulty of these two subproblems. Characterizing the difficulty of these subproblems is essentially the crux of proving the lower bounds for the expectations in Theorems \ref{thm:sbm} and \ref{thm:nonparam}.
 
 Up until now we have almost exclusively discussed the strategies for the SBM($k$) and not mentioned what is done for $f \in \holder$. This is due to a clever trick by Gao and Zhu to approximate any $f \in \holder$ by what is essentially an SBM($k$) where $k = n^{\delta}$ for some $\delta \in (0, 1)$. This allows the proofs of the nonparametric case to follow with much less work from the SBM($k$) case.
 
@@ -167,7 +167,7 @@ The right-hand side of the previous inequality can further be bounded as
     \dprod{\htheta - \theta, \theta - A} & \leq \norm{\htheta - \ttheta}\abs*{\dprod*{\frac{\htheta-\ttheta}{\norm{\htheta - \ttheta}}, A - \theta  }} \\
   & \quad + (\norm{\ttheta - \htheta} + \norm{\htheta - \theta})\abs*{\dprod*{\frac{\ttheta-\theta}{\norm{\ttheta-\theta}},A-\theta}}
 \end{align*}
-The authors then make use of three Lemmas that give upper bounds for $\norm{\htheta-\ttheta}$, $\abs*{\dprod*{\frac{\ttheta-\ttheta}{\norm{\ttheta-\ttheta}},A-\theta}}$ and $\abs*{\dprod*{\frac{\ttheta-\theta}{\norm{\ttheta-\theta}},A-\theta}}$. All these terms can be bounded by $C\sqrt{k^2 +n\log k}$ with probability at least $1-3\exp(-C^\prime n\log k)$. Combining the bounds, we have
+The authors then make use of three lemmas that give upper bounds for $\norm{\htheta-\ttheta}$, $\abs*{\dprod*{\frac{\ttheta-\ttheta}{\norm{\ttheta-\ttheta}},A-\theta}}$ and $\abs*{\dprod*{\frac{\ttheta-\theta}{\norm{\ttheta-\theta}},A-\theta}}$. The argument boils down to applying either Hoeffding's or Bernstein's inequality to show that all these terms can be bounded by $C\sqrt{k^2 +n\log k}$ with probability at least $1-3\exp(-C^\prime n\log k)$. Combining the bounds, we have
 
 \[
 \norm{\htheta-\theta}^2 \leq 2C\norm{\htheta - \theta}\sqrt{k^2 +n \log k} + 4C^2(k^2 +n\log k),
@@ -187,14 +187,14 @@ For the bound in expectation, we can make use of the following inequality:
 where $\varepsilon^2 = C_1(\frac{k^2}{n^2}+ \frac{\log k}{n})$. Since $\varepsilon^2$ is the dominating term, this completes the proof.
 
 \subsection{Lower Bound SBM($k$)} \label{sec:lower_sbm}
-Note that the lower bound of the expectation in Theorem \ref{thm:sbm} is equivalent to a lower bound of the following probability (Markov's inequality):
+Note that the lower bound for the expectation in Theorem \ref{thm:sbm} is equivalent to a lower bound for the following probability (Markov's inequality):
 \begin{equation}
 \begin{aligned}
 &\inf_{\hat{\theta}} \sup_{\theta \in \Theta_k} \Dist \left\{ \frac{1}{n^2}\sum_{i,j \in \brackets{n}} (\hat{\theta}_{ij} - \theta_{ij})^2 \geq \epsilon^2\right\}  \\
 &= \inf_{\hat{\theta}} \sup_{Q = Q^T \in [0, 1]^{k \times k}} \sup_{z \in \partitions} \Dist \left\{ \frac{1}{n^2}\sum_{i,j \in \brackets{n}} (\hat{\theta}_{ij} - Q_{z(i), z(j)})^2 \geq \epsilon^2\right\}
 \end{aligned}
 \end{equation}
-for any $\epsilon > 0$. We can now see how the clustering and nonparametric rate come into the bound. We have a supremum over both the group probabilities $Q$ and the cluster assignments $z$. Just as in class, the proof of the in-probability lower bound is an application of Fano's Lemma. To apply Fano's Lemma we restrict the supremum of $\Theta_k$ to a subset $T \subset \Theta_k$ with a finite packing number $\mathcal{M}(\epsilon, T, \rho)$. In this case we can restrict $\Theta_k$ in two different ways. The first way fixes $z \in \partitions$ and then finds an appropriate packing as $Q$ varies. This leads to the nonparametric rate. The second way fixes $Q$ and finds an appropriate packing as $z$ varies. This leads to the clustering rate. As a result we will have two lower bounds, which we can then combine using what is essentially a union bound argument. We start with the nonparametric rate.
+for any $\epsilon > 0$. The double supremum reveals how the clustering and nonparametric rate come into the bound. We have a supremum over both the group probabilities $Q$ and the cluster assignments $z$. Just as in class, the proof of the in-probability lower bound is an application of Fano's Lemma. To apply Fano's Lemma we restrict the supremum of $\Theta_k$ to a subset $T \subset \Theta_k$ with a finite packing number $\mathcal{M}(\epsilon, T, \rho)$. In this case we can restrict $\Theta_k$ in two different ways. The first way fixes $z \in \partitions$ and then finds an appropriate packing as $Q$ varies. This leads to the nonparametric rate. The second way fixes $Q$ and finds an appropriate packing as $z$ varies. This leads to the clustering rate. As a result we will have two lower bounds, which we can then combine using what is essentially a union bound argument. We start with the nonparametric rate.
 
 \textit{Nonparametric rate:} The nonparametric rate actually utilizes a version of Fano's Lemma in terms of the $\chi^2$ distance instead of the Kullback-Leibler distance. The statement is as follows:
 \begin{equation}\label{eq:chi2_fano}
@@ -209,14 +209,14 @@ where $\dchisq{T} = \sup_{\theta, \theta'}\chi^2(\Dist_{\theta} || \Dist_{\theta
 \end{align*}
 where we are using the fact that $\log(x) \leq x - 1$ for $x > 0$ and we will latter have to restrict $T$ so that $\theta_{ij}' \in [1/4, 3/4]$.
 
-To proceed further we need to find an appropriate subset $T$. Gao and Zhu use the following construction, which relies on a Varshamov-Gilbert bound to obtain an appropriate packing. Recall for this rate we are free to choose $z$. A simple choice is a balanced partitioning. Without loss of generality we can assume $n / k$ and $k / 2$ are integers. A balanced partition then sets the partition mapping for each $a \in \brackets{k}$ as $z^{-1}(a) = \set{(a-1)n/k + 1, \dots, an/k}$. Note that there are $n/k$ nodes assigned to each cluster. We can then define $Q^{\omega} = (Q_{ab}^{\omega})_{k \times k}$ by
+To proceed further we need to find an appropriate subset $T$. Gao and Zhu use the following construction, which relies on a Varshamov-Gilbert bound to obtain an appropriate packing. Recall that for this rate we are free to choose $z$. A simple choice is a balanced partitioning. Without loss of generality we can assume $n / k$ and $k / 2$ are integers. A balanced partition then sets the partition mapping for each $a \in \brackets{k}$ to $z^{-1}(a) = \set{(a-1)n/k + 1, \dots, an/k}$. Note that there are $n/k$ nodes assigned to each cluster. We can then define $Q^{\omega} = (Q_{ab}^{\omega})_{k \times k}$ as
 \begin{equation}
 \begin{aligned}
 Q^{\omega}_{ab} &= Q^{\omega}_{ba} = \frac{1}{2} + \frac{c_1 k}{n} \omega_{ab} \quad \text{for } a > b \in \brackets{k}, \\
 Q_{aa}^{\omega} &= \frac{1}{2} \quad \text{for } a \in \brackets{k}.
 \end{aligned}
 \end{equation}
-where $\omega_{ab} \in \HyperCube$ with $d = k(k-1)/2$ (number of entries we need to fix in $Q_{ab}$), and $c_1$ is a constant introduced to satisfy $\theta_{ij}' \in [1/4, 3/4]$ in the bound of the $\chi^2$ distance. We are now ready to define our subset $T$. Let $\theta^{\omega} = (\theta_{ij}^{\omega})_{n \times n}$ with $\theta_{ij}^{\omega} = Q_{z(i)z(j)}^{\omega}$ for $i \neq j$ and $\theta_{ii}^{\omega} = 0$. Then let $T_1 = \set{\theta^{\omega} : \omega \in \HyperCube}$. The bound on the $\chi^2$ distance is straightforward:
+where $\omega_{ab} \in \HyperCube$ with $d = k(k-1)/2$ (the number of entries we need to fix in $Q_{ab}$), and $c_1$ is a constant introduced to satisfy $\theta_{ij}' \in [1/4, 3/4]$ in the bound of the $\chi^2$ distance. We are now ready to define our subset $T$. Let $\theta^{\omega} = (\theta_{ij}^{\omega})_{n \times n}$ with $\theta_{ij}^{\omega} = Q_{z(i)z(j)}^{\omega}$ for $i \neq j$ and $\theta_{ii}^{\omega} = 0$. Then let $T_1 = \set{\theta^{\omega} : \omega \in \HyperCube}$. The bound on the $\chi^2$ distance is straightforward:
 \begin{equation}
 \begin{aligned}
 \chi^2(\Dist_{\theta^{\omega}} || \Dist_{\theta^{\omega'}}) &\leq \exp\left(8 \sum_{ij} (\theta_{ij}^{\omega} - \theta_{ij}^{\omega'})^2\right) \\
@@ -224,7 +224,7 @@ where $\omega_{ab} \in \HyperCube$ with $d = k(k-1)/2$ (number of entries we nee
 \leq \exp(8 c_1^2 k^2).
 \end{aligned}
 \end{equation}
-where $c_1$ is chosen small enough. We lower bound the packing number through the VG Lemma, i.e.
+where $c_1$ is chosen small enough. We lower bound the packing number through the VG lemma, i.e.
 we can find a subset $S \subset \HyperCube$ such that 1. $|S| \geq \exp(d/8)$ and 2. $\rho_{H}(\omega, \omega') \geq d/4$. Thus,
 \begin{equation}
 \rho^2(\theta^{\omega}, \theta^{\omega'}) \geq \frac{1}{k^2} \sum_{1 \leq b < a \leq k} (Q_{ab}^{\omega} - Q_{ab}^{\omega'})^2 = \frac{c_1^2}{n^2} \rho_{H}(\omega, \omega').\geq \frac{c_1^2 d}{4 n^2} = .\frac{c_1^2 k(k-1)}{8 n^2}
@@ -247,7 +247,7 @@ B^T & 0
 \end{array}
 \right]
 \end{equation}
-where $B$ is a $(k/2) \times (k/2)$ matrix. We now use the VG lemma to set the values of $B$ that allow us to control the packing number lower bound and KL diameter upper bound. Let $d = k/2$, so that for $k$ large enough the VG lemma allows us to find $\set{\omega_1, \dots, \omega_{k/2}} \subset \mathcal{H}_{k/2}$ such that $\rho(\omega_a, \omega_b) > k/8$ for $a \neq b \in \brackets{k/2}$. Define $B = (B_1, \dots, B_{k/2})$ by
+where $B$ is a $(k/2) \times (k/2)$ matrix. We now use the VG lemma to set the values of $B$ so that we can control the packing number and KL diameter. Let $d = k/2$, so that for $k$ large enough the VG lemma allows us to find $\set{\omega_1, \dots, \omega_{k/2}} \subset \mathcal{H}_{k/2}$ such that $\rho(\omega_a, \omega_b) > k/8$ for $a \neq b \in \brackets{k/2}$. Define $B = (B_1, \dots, B_{k/2})$ by
 \begin{equation}
 B_a = \frac{1}{2} + \sqrt{\frac{c_2 \log k}{n}}\omega_a, \quad \text{ for } a \in \brackets{k/2}.
 \end{equation}
@@ -275,7 +275,7 @@ Again we are restricting the partitions to equal sizes with $n/k$ nodes in each.
 \end{center}
 \end{table}
 
-The lower bounding procedure is the same as before: first we upper bound the KL diameter and then we lower bound the packing number. The upper bound for the KL distance is simple (in a homework assignment we derived this upper bound for the KL of independent Bernoullis):
+The lower bounding procedure is the same as before: first we upper bound the KL diameter and then we lower bound the packing number. The upper bound for the KL distance is simple (in a homework assignment we derived this quadratic upper bound for independent Bernoullis):
 \begin{equation}
 \text{KL}(\Dist_{\theta} || \Dist_{\theta'}) \leq 8 \sum_{ij} (\theta_{ij} - \theta_{ij}')^2 \\
 \leq 8 n^2 c_2 \frac{\log k}{n} = 8 c_2 n \log k.
@@ -315,14 +315,14 @@ Combining these two bounds we have a bound on the packing number: $\log \mathcal
 
 \subsection{Upper Bound H\"older Class} \label{sec:upper_hold}
 
-Let us redefine the $z^\ast$ and $Q^\ast$ used in the proof of the upper bound for the SBM. Choose $z^\ast$ that satisfies
+Let us redefine the $z^\ast$ and $Q^\ast$ used in the proof of the upper bound for the SBM($k$). Choose $z^\ast$ that satisfies
 
 \[
 \frac{1}{n^2} \sum_{a,b\in \brackets{k}} \sum_{i\neq j: z^\ast(i)=a, z^\ast(j)=b} (\theta_{ij} -\bar{\theta}_{ab}(z^\ast)  )^2 \neq CM^2 \left( \frac{1}{k^2} \right)^{\alpha \wedge 1},
 \]
 for some universal constant $C >0$. The authors present the existence of such a $z^\ast$ under the H\"older class $\holder$ via a Lemma. Choosing the partition function in this manner implies a good approximation of $\set{\theta_{ij}}$ by the stochastic block model. With this $z^\ast$, define $Q^\ast_{ab} = \bar{\theta}_{ab}(z^\ast)$ for any $a,b \in \brackets{k}$. Lastly, define $\theta^\ast_{ij} = Q^\ast_{z^\ast(i)z^\ast(j)}$ for all $i \neq j$, with diagonal elements set to zero.
 
-Similar to the upper bounds for the stochastic block model, we will use a result that states that for any constant $C^\prime > 0$, there exists a constant $C>0$ only depending on $C^\prime$, such that
+Similar to the upper bounds for the stochastic block model (the proof involves Hoeffding's inequality), we will use a result that states that for any constant $C^\prime > 0$, there exists a constant $C>0$ only depending on $C^\prime$, such that
 
 \[  \abs{\dprod{\frac{\ttheta - \atheta}{\norm{\ttheta-\atheta}}, A-\theta}} \leq C\sqrt{n\log k},
 \]
@@ -349,7 +349,7 @@ Solving this quadratic inequality of $L$, we get
 \[
 L^2 \leq \max\set{16(F+B)^2, 4R(E+F)}
 \]
-By using the upper bounds mentioned in this section and section 4.1, for any constant $c^\prime >0$, there exists constants $C$ only depending on $C^\prime$, $M$, such that
+By using the upper bounds mentioned in this section and section \ref{sec:upper_sbm}, for any constant $c^\prime >0$, there exists constants $C$ only depending on $C^\prime$, $M$, such that
 
 \[ B^2 \leq Cn^2 \left(\frac{1}{k^2}\right)^{\alpha \wedge 1}, \qquad F^2 \leq Cn\log k   \]
 
@@ -372,7 +372,7 @@ Finally, when $\alpha \geq 1$, choose $k = \ceil{\sqrt{n}} $ to get the bound $C
 
 The outline of the proof is the same as for the SBM($k$). Gao and Zhu break up the rates into a nonparametric and a clustering rate. The nonparametric rate is particularly simple, since it turns out to be the same as classical nonparametric regression with a fixed design and Bernoulli observations. We can then rely on the classical result. The clustering rate is new and involves approximating any $f \in \holder$ with an appropriate $Q$ from an SBM($k$) with $k$ a function of sample size.
 
-\textit{Nonparametric rate:} Recall the nonparametric rate fixes $\Dist_{\xi}$ and varies $f$. This allows us to fix the design $(\xi_i, \dots, \xi_n) = (1/n, \dots, n/n)$. Note that this means choosing $\Dist_{\xi}$ as point masses, but that is okay. In addition, we can fix $\alpha \in (0, 1)$ here, since we will allow it to exceed this bounds in the clustering rate. We then want a bound for
+\textit{Nonparametric rate:} Recall the nonparametric rate fixes $\Dist_{\xi}$ and varies $f$. This allows us to fix the design $(\xi_i, \dots, \xi_n) = (1/n, \dots, n/n)$. In addition, we can fix $\alpha \in (0, 1)$ here, since we will allow it to exceed this bounds in the clustering rate. We then want a bound for
 \begin{equation}
 \inf_{\htheta}\sup_{f \in \holder} \Dist \left\{\frac{1}{n^2} \sum_{i,j \in \brackets{n}} \left(\htheta_{ij} - f(i/n, j/n)\right)^2 \geq \frac{\epsilon^2}{4}\right\}.
 \end{equation}
@@ -383,7 +383,7 @@ However, this is just the minimax lower bound for Liptchiz functions on $(0, 1)$
 %Conclusion
 \section{Conclusion}\label{sec:conclusion}
 
-In this paper the authors manage to obtain optimal rates under the mean square error for both the stochastic block model with $k$ clusters and for nonparametric graphon estimation in a H\"older class. The minimax rate for nonparametric estimation is the same as the optimal rate of convergence in the typical nonparametric scenario, when $\alpha \in (0,1)$, even when the design is unknown. When $\alpha \geq 1$, the cost of not knowing the design is reflected in that the smoothness does not improve the rate any longer. As mentioned in the introduction, this allows for new estimators to compare against optimal rates of convergence.
+In this paper the authors obtained minimax rates under mean square error for both the stochastic block model with $k$ clusters and for nonparametric graphon estimation in a H\"older class. The minimax rate for nonparametric estimation is the same as the optimal rate of convergence in the typical nonparametric scenario, when $\alpha \in (0,1)$, even when the design is unknown. When $\alpha \geq 1$, the cost of not knowing the design is reflected in that the smoothness does not improve the rate any longer. As mentioned in the introduction, the benifits of these results is that they allow new estimators to compare against an optimal rate of convergence.
 
 The authors discuss some natural extensions of their results. For example, one could allow for asymmetric graphons, which results in a different rate. In addition, one could use another loss function. In particular, the authors consider the operator norm and derive bounds that scale as $n$. Further extensions would be to change the graph structure. For example, one could consider rates for directed graphs. \citep{cai2016digraphon} derive di-graphon functions, which currently do not have a known minimax rate of estimation. Finally, one could consider estimation on graphs with weighted edges. This would be equivalent to estimation with a Poisson likelihood instead of a Bernoulli likelihood.
 
